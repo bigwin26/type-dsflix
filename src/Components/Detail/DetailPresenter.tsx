@@ -277,14 +277,6 @@ const DetailPresenter = ({
           </ItemContainer>
           <Overview>{result.overview}</Overview>
           <TabContainer>
-            {result.production_companies && result.production_companies.length > 0 && (
-              <TabItem
-                onClick={handleOnClick}
-                selected={visible === "Production"}
-              >
-                Production
-              </TabItem>
-            )}
             {result.created_by && result.created_by.length > 0 && (
               <TabItem
                 onClick={handleOnClick}
@@ -313,9 +305,6 @@ const DetailPresenter = ({
             )}
           </TabContainer>
           <EtcContainer>
-            {result.production_companies&& result.production_companies.length > 0 && visible === "Production" && (
-              <Logo data={result.production_companies} group="logo" />
-            )}
             {result.created_by && visible === "Director" && (
               <Section>
                 {result.created_by.map(director => (
@@ -367,15 +356,6 @@ const DetailPresenter = ({
         </Data>
         <RightContainer>
         <Logo data={result.production_companies} group="logo" />
-              <VideoContainer>
-                {result.videos.results.map((video, index) => (
-                  <Youtube
-                    key={index}
-                    src={video.key}
-                    title={video.title ? video.title : video.name}
-                  />
-                ))}
-              </VideoContainer>
               <VideoContainer>
                 {result.videos.results.map((video, index) => (
                   <Youtube

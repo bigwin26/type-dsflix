@@ -15,7 +15,6 @@
     "@types/react-router-dom": "^5.1.5",
     "@types/styled-components": "^5.1.0",
     "axios": "0.18",
-    "cross-env": "^7.0.2",
     "react": "^16.13.1",
     "react-app-polyfill": "^1.0.6",
     "react-dom": "^16.13.1",

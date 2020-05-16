@@ -6,6 +6,7 @@ import Youtube from "../Common/Youtube";
 import Message from "../Common/Message";
 import Poster from "../Common/Poster";
 import Logo from "../Common/Logo";
+import Cast from '../Common/Cast'
 import Section from "../Common/Section";
 
 const Container = styled.div`
@@ -146,18 +147,6 @@ const TabItem = styled.li<{ selected: boolean }>`
   }
 `;
 
-const VideoContainer = styled.div`
-  margin: 10px 0;
-  overflow: auto;
-  white-space: nowrap;
-  iframe {
-    margin-right: 5px;
-  }
-  @media (max-width: 768px) {
-    -ms-overflow-style: none;
-  }
-`;
-
 const EtcContainer = styled.div`
   width: 100%;
   border-radius: 3px;
@@ -171,6 +160,7 @@ const RightContainer = styled.div`
 `
 
 interface Result{
+  id:number,
   title:string,
   name:string,
   backdrop_path:string,
@@ -186,12 +176,14 @@ interface Result{
   created_by:Array<{id:number,profile_path:string,name:string}>,
   belongs_to_collection:{id:number,poster_path:string,name:string},
   seasons:Array<{id:number,poster_path:string,name:string}>,
-  videos: {results:Array<{key:string,title:string,name:string}>},
+  videos: {results:Array<{key:string,src:string,title:string,name:string}>},
   production_companies:Array<{id:number,logo_path:string,name:string}>,
 }
 
 interface IDetail {
   result: Result | null;
+  similar: Array<Result> | null;
+  cast: Array<any> | null;
   error: string;
   loading: boolean;
   handleOnClick:(event:React.MouseEvent<HTMLLIElement>)=>void,
@@ -200,6 +192,8 @@ interface IDetail {
 
 const DetailPresenter = ({
   result,
+  similar,
+  cast,
   error,
   loading,
   handleOnClick,
@@ -277,12 +271,12 @@ const DetailPresenter = ({
           </ItemContainer>
           <Overview>{result.overview}</Overview>
           <TabContainer>
-            {result.created_by && result.created_by.length > 0 && (
+            {similar && (
               <TabItem
                 onClick={handleOnClick}
-                selected={visible === "Director"}
+                selected={visible === "Similar"}
               >
-                Director
+                Similar
               </TabItem>
             )}
             {result.belongs_to_collection && (
@@ -298,13 +292,20 @@ const DetailPresenter = ({
                 Seasons
               </TabItem>
             )}
-            {result.videos && result.videos.results.length > 0 && (
-              <TabItem onClick={handleOnClick} selected={visible === "Trailer"}>
-                Trailer
-              </TabItem>
-            )}
           </TabContainer>
           <EtcContainer>
+          {similar && visible === "Similar" && (
+              <Section>
+                {similar.map(movie => (
+                  <Poster
+                    key={movie.id}
+                    id={movie.id}
+                    imageUrl={movie.backdrop_path}
+                    title={movie.title}
+                  />
+                ))}
+              </Section>
+            )}
             {result.created_by && visible === "Director" && (
               <Section>
                 {result.created_by.map(director => (
@@ -340,31 +341,11 @@ const DetailPresenter = ({
               </Section>
             )}
           </EtcContainer>
-          {result.videos.results.length > 0 && visible === "Trailer" && (
-            <>
-              <VideoContainer>
-                {result.videos.results.map((video, index) => (
-                  <Youtube
-                    key={index}
-                    src={video.key}
-                    title={video.title ? video.title : video.name}
-                  />
-                ))}
-              </VideoContainer>
-            </>
-          )}
         </Data>
         <RightContainer>
         <Logo data={result.production_companies} group="logo" />
-              <VideoContainer>
-                {result.videos.results.map((video, index) => (
-                  <Youtube
-                    key={index}
-                    src={video.key}
-                    title={video.title ? video.title : video.name}
-                  />
-                ))}
-              </VideoContainer>
+        {result.videos && result.videos.results.length > 0 && (<Youtube data={result.videos.results}/>)}
+        <Cast data={cast}/>
         </RightContainer>
       </Content>
       {error && <Message text={error} color={"#e74c3c"} />}

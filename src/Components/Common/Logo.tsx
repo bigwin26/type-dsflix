@@ -19,12 +19,14 @@ const LogoContainer = styled.div`
   background-color: white;
 `;
 
-const StyledSpan = styled.span`
+const Item = styled.div`
+  display:flex;
+  align-items:center;
   color: black;
   font-size: 16px;
   :not(:last-child) {
-    margin-right: 10px;
-  }
+    margin-bottom: 5px;
+  } 
   opacity: 0.7;
 `;
 
@@ -52,10 +54,8 @@ const Logo = ({ data }:ILogo) => {
     <LogoTitle>Production</LogoTitle>
     <LogoContainer>
       {data && data.length > 1 ? (
-        data.map((img,index) => <StyledSpan key={index}>{img.name}</StyledSpan>)) : data&&data[0].logo_path !== null ? (
-        <Image src={`https://image.tmdb.org/t/p/w200${data[0].logo_path}`} />
-      ) : (
-        <StyledSpan>"{data&&data[0].name}"</StyledSpan>
+        data.map((img,index) => <Item key={index}><Image src={require("../../lib/assets/film-icon.png")}/>{img.name}</Item>)) : (
+        <Item>"{data&&data[0].name}"</Item>
       )}
     </LogoContainer>
     </>

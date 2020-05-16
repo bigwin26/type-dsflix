@@ -21,6 +21,8 @@ export const movieApi = {
       params: { query: encodeURIComponent(term) },
     });
   },
+  credits: (movie_id:number) => api.get(`/movie/${movie_id}/credits`),
+  similar: (movie_id:number) => api.get(`/movie/${movie_id}/similar`),
 };
 
 export const tvApi = {

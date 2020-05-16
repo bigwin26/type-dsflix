@@ -52,6 +52,7 @@ interface IPoster {
 }
 
 const Poster = ({ id, imageUrl, title, year, isMovie = false }: IPoster) => {
+  console.log('poster',title)
   return (
     <Link to={isMovie ? `/movie/${id}` : `/show/${id}`}>
       <Container>

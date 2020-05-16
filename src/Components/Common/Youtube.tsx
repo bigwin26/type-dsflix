@@ -1,21 +1,26 @@
 import React from "react";
+import Horizon from './Horizon';
 
 interface IYoutube{
-  src:string,
-  title:string,
+  data:Array<{key:string, src:string, title:string, name:string}>
 }
 
-const Youtube = ({ src, title }:IYoutube) => {
+const Youtube = ({ data }:IYoutube) => {
   return (
-    <iframe
-      width="inherit"
-      height="inherit"
-      src={`https://www.youtube.com/embed/${src}`}
-      frameBorder="0"
-      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-      allowFullScreen
-      title={title}
-    ></iframe>
+    <Horizon>
+      {data.map((video, index) => (
+      <iframe
+        key={index}
+        width="inherit"
+        height="inherit"
+        src={`https://www.youtube.com/embed/${video.key}`}
+        frameBorder="0"
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+        title={video.name}
+      ></iframe>
+    ))}
+    </Horizon>
   );
 };
 

@@ -9,9 +9,11 @@ export default withRouter(({ history, location, match }) => {
   const { pathname } = location;
 
   const [result, setResult] = useState(null);
+  const [cast, setCast] = useState(null);
+  const [similar, setSimilar] = useState(null);
   const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState(true);
-  const [visible, setVisible] = useState("Production");
+  const [visible, setVisible] = useState("Similar");
 
   const setData = useCallback(async () => {
     try {
@@ -19,6 +21,11 @@ export default withRouter(({ history, location, match }) => {
       if (pathname.includes("/movie/")) {
         const { data: movieDetail } = await Api.movieApi.movieDetail(id);
         setResult(movieDetail);
+        const { data:{cast}} = await Api.movieApi.credits(id);
+        setCast(cast);
+        const { data:{results:similarList}} = await Api.movieApi.similar(id);
+        console.log(similarList);
+        setSimilar(similarList);
       } else if (pathname.includes("/show/")) {
         const { data: showDetail } = await Api.tvApi.tvDetail(id);
         setResult(showDetail);
@@ -45,6 +52,8 @@ export default withRouter(({ history, location, match }) => {
   return (
     <DetailPresenter
       result={result}
+      similar={similar}
+      cast={cast}
       error={error}
       loading={loading}
       handleOnClick={handleOnClick}

@@ -21,9 +21,13 @@ export default withRouter(({ history, location, match }) => {
       if (pathname.includes("/movie/")) {
         const { data: movieDetail } = await Api.movieApi.movieDetail(id);
         setResult(movieDetail);
-        const { data:{cast}} = await Api.movieApi.credits(id);
+        const {
+          data: { cast },
+        } = await Api.movieApi.credits(id);
         setCast(cast);
-        const { data:{results:similarList}} = await Api.movieApi.similar(id);
+        const {
+          data: { results: similarList },
+        } = await Api.movieApi.similar(id);
         console.log(similarList);
         setSimilar(similarList);
       } else if (pathname.includes("/show/")) {
@@ -36,7 +40,7 @@ export default withRouter(({ history, location, match }) => {
     setLoading(false);
   }, [id, pathname]);
 
-  const handleOnClick = (event:React.MouseEvent<HTMLLIElement>) => {
+  const handleOnClick = (event: React.MouseEvent<HTMLLIElement>) => {
     setVisible(event.currentTarget.innerHTML);
   };
 

@@ -4,11 +4,20 @@ import { Link } from "react-router-dom";
 
 const Container = styled.div`
   font-size: 12px;
+  text-align: center;
+`;
+
+const StyledLink = styled(Link)`
+  display: inline-block;
+  :not(:last-child) {
+    margin-right: 10px;
+  }
 `;
 
 const Image = styled.div<{ bgUrl?: string }>`
   background-image: url(${(props) => props.bgUrl});
   height: 180px;
+  width: 125px;
   background-size: cover;
   border-radius: 4px;
 `;
@@ -52,9 +61,8 @@ interface IPoster {
 }
 
 const Poster = ({ id, imageUrl, title, year, isMovie = false }: IPoster) => {
-  console.log('poster',title)
   return (
-    <Link to={isMovie ? `/movie/${id}` : `/show/${id}`}>
+    <StyledLink to={isMovie ? `/movie/${id}` : `/show/${id}`}>
       <Container>
         <ImageContainer>
           <Image
@@ -70,7 +78,7 @@ const Poster = ({ id, imageUrl, title, year, isMovie = false }: IPoster) => {
         </Title>
         {year && <Year>{year}</Year>}
       </Container>
-    </Link>
+    </StyledLink>
   );
 };
 

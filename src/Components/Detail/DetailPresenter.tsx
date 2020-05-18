@@ -1,13 +1,13 @@
 import React from "react";
 import styled from "styled-components";
-import {Helmet} from "react-helmet";
+import { Helmet } from "react-helmet";
 import Loader from "../Common/Loader";
 import Youtube from "../Common/Youtube";
 import Message from "../Common/Message";
 import Poster from "../Common/Poster";
 import Logo from "../Common/Logo";
-import Cast from '../Common/Cast'
-import Section from "../Common/Section";
+import Cast from "../Common/Cast";
+import Horizon from "Components/Common/Horizon";
 
 const Container = styled.div`
   height: calc(100vh - 50px);
@@ -124,7 +124,6 @@ const Icon = styled.img<{ src: string }>`
 
 const TabContainer = styled.ul`
   margin-top: 20px;
-  margin-bottom: 30px;
   display: flex;
   @media (max-width: 768px) {
     justify-content: center;
@@ -148,36 +147,38 @@ const TabItem = styled.li<{ selected: boolean }>`
 `;
 
 const EtcContainer = styled.div`
-  width: 100%;
+  width: 85%;
   border-radius: 3px;
   opacity: 0.8;
 `;
 
 const RightContainer = styled.div`
-  width:30%;
-  display:flex;
-  flex-direction:column;
-`
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+`;
 
-interface Result{
-  id:number,
-  title:string,
-  name:string,
-  backdrop_path:string,
-  poster_path:string,
-  homepage:string,
-  release_date:string,
-  first_air_date:string,
-  runtime:number,
-  episode_run_time:Array<number>,
-  genres:Array<{name:string}>,
-  imdb_id:number,
-  overview:string,
-  created_by:Array<{id:number,profile_path:string,name:string}>,
-  belongs_to_collection:{id:number,poster_path:string,name:string},
-  seasons:Array<{id:number,poster_path:string,name:string}>,
-  videos: {results:Array<{key:string,src:string,title:string,name:string}>},
-  production_companies:Array<{id:number,logo_path:string,name:string}>,
+interface Result {
+  id: number;
+  title: string;
+  name: string;
+  backdrop_path: string;
+  poster_path: string;
+  homepage: string;
+  release_date: string;
+  first_air_date: string;
+  runtime: number;
+  episode_run_time: Array<number>;
+  genres: Array<{ name: string }>;
+  imdb_id: number;
+  overview: string;
+  created_by: Array<{ id: number; profile_path: string; name: string }>;
+  belongs_to_collection: { id: number; poster_path: string; name: string };
+  seasons: Array<{ id: number; poster_path: string; name: string }>;
+  videos: {
+    results: Array<{ key: string; src: string; title: string; name: string }>;
+  };
+  production_companies: Array<{ id: number; logo_path: string; name: string }>;
 }
 
 interface IDetail {
@@ -186,8 +187,8 @@ interface IDetail {
   cast: Array<any> | null;
   error: string;
   loading: boolean;
-  handleOnClick:(event:React.MouseEvent<HTMLLIElement>)=>void,
-  visible:string
+  handleOnClick: (event: React.MouseEvent<HTMLLIElement>) => void;
+  visible: string;
 }
 
 const DetailPresenter = ({
@@ -207,149 +208,153 @@ const DetailPresenter = ({
       <Loader />
     </>
   ) : (
-    result&&
-    <Container>
-      <Helmet>
-        <title>{result.title ? result.title : result.name} | DSflix</title>
-      </Helmet>
-      <Backdrop
-        Bgimg={`https://image.tmdb.org/t/p/original${result.backdrop_path}`}
-      />
-      <Content>
-        <CoverContainer>
-          <Cover
-            Bgimg={
-              result.poster_path
-                ? `https://image.tmdb.org/t/p/original${result.poster_path}`
-                : require("lib/assets/noPosterSmall.png")
-            }
-          />
-          <Icon
-            src={require("lib/assets/youtube_icon.png")}
-            onClick={() => window.open(`${result.homepage}`)}
-          />
-        </CoverContainer>
-        <Data>
-          <Title>{result.title ? result.title : result.name}</Title>
-          <ItemContainer>
-            <Item>
-              {result.release_date
-                ? result.release_date.substring(0, 4)
-                : result.first_air_date.substring(0, 4)}
-            </Item>
-            <Divider>ㆍ</Divider>
-            <Item>
-              {result.runtime || result.runtime === 0
-                ? result.runtime
-                : result.episode_run_time[0]}
-              min
-            </Item>
-            <Divider>ㆍ</Divider>
-            <Item>
-              {result.genres &&
-                result.genres.map((genre, index) =>
-                  index === result.genres.length - 1
-                    ? genre.name
-                    : `${genre.name} / `,
-                )}
-            </Item>
-            {result.imdb_id && (
-              <>
-                <Divider>ㆍ</Divider>
-                <Item>
-                  <Icon
-                    src={require("../../lib/assets/imdb.png")}
-                    onClick={() =>
-                      window.open(
-                        `https://www.imdb.com/title/${result.imdb_id}`,
-                      )
-                    }
-                  />
-                </Item>
-              </>
-            )}
-          </ItemContainer>
-          <Overview>{result.overview}</Overview>
-          <TabContainer>
-            {similar && (
-              <TabItem
-                onClick={handleOnClick}
-                selected={visible === "Similar"}
-              >
-                Similar
-              </TabItem>
-            )}
-            {result.belongs_to_collection && (
-              <TabItem
-                onClick={handleOnClick}
-                selected={visible === "Collection"}
-              >
-                Collection
-              </TabItem>
-            )}
-            {result.seasons && (
-              <TabItem onClick={handleOnClick} selected={visible === "Seasons"}>
-                Seasons
-              </TabItem>
-            )}
-          </TabContainer>
-          <EtcContainer>
-          {similar && visible === "Similar" && (
-              <Section>
-                {similar.map(movie => (
+    result && (
+      <Container>
+        <Helmet>
+          <title>{result.title ? result.title : result.name} | DSflix</title>
+        </Helmet>
+        <Backdrop
+          Bgimg={`https://image.tmdb.org/t/p/original${result.backdrop_path}`}
+        />
+        <Content>
+          <CoverContainer>
+            <Cover
+              Bgimg={
+                result.poster_path
+                  ? `https://image.tmdb.org/t/p/original${result.poster_path}`
+                  : require("lib/assets/noPosterSmall.png")
+              }
+            />
+            <Icon
+              src={require("lib/assets/youtube_icon.png")}
+              onClick={() => window.open(`${result.homepage}`)}
+            />
+          </CoverContainer>
+          <Data>
+            <Title>{result.title ? result.title : result.name}</Title>
+            <ItemContainer>
+              <Item>
+                {result.release_date
+                  ? result.release_date.substring(0, 4)
+                  : result.first_air_date.substring(0, 4)}
+              </Item>
+              <Divider>ㆍ</Divider>
+              <Item>
+                {result.runtime || result.runtime === 0
+                  ? result.runtime
+                  : result.episode_run_time[0]}
+                min
+              </Item>
+              <Divider>ㆍ</Divider>
+              <Item>
+                {result.genres &&
+                  result.genres.map((genre, index) =>
+                    index === result.genres.length - 1
+                      ? genre.name
+                      : `${genre.name} / `,
+                  )}
+              </Item>
+              {result.imdb_id && (
+                <>
+                  <Divider>ㆍ</Divider>
+                  <Item>
+                    <Icon
+                      src={require("../../lib/assets/imdb.png")}
+                      onClick={() =>
+                        window.open(
+                          `https://www.imdb.com/title/${result.imdb_id}`,
+                        )
+                      }
+                    />
+                  </Item>
+                </>
+              )}
+            </ItemContainer>
+            <Overview>{result.overview}</Overview>
+            <TabContainer>
+              {similar && similar.length > 0 && (
+                <TabItem
+                  onClick={handleOnClick}
+                  selected={visible === "Similar"}
+                >
+                  Similar
+                </TabItem>
+              )}
+              {result.belongs_to_collection && (
+                <TabItem
+                  onClick={handleOnClick}
+                  selected={visible === "Collection"}
+                >
+                  Collection
+                </TabItem>
+              )}
+              {result.seasons && (
+                <TabItem
+                  onClick={handleOnClick}
+                  selected={visible === "Seasons"}
+                >
+                  Seasons
+                </TabItem>
+              )}
+            </TabContainer>
+            <EtcContainer>
+              {similar && similar.length > 0 && visible === "Similar" && (
+                <Horizon>
+                  {similar.map((movie) => (
+                    <Poster
+                      key={movie.id}
+                      id={movie.id}
+                      imageUrl={movie.backdrop_path}
+                      title={movie.title}
+                      isMovie={true}
+                    />
+                  ))}
+                </Horizon>
+              )}
+              {result.belongs_to_collection && visible === "Collection" && (
+                <Horizon>
                   <Poster
-                    key={movie.id}
-                    id={movie.id}
-                    imageUrl={movie.backdrop_path}
-                    title={movie.title}
+                    key={result.belongs_to_collection.id}
+                    id={result.belongs_to_collection.id}
+                    imageUrl={result.belongs_to_collection.poster_path}
+                    title={result.belongs_to_collection.name}
                   />
-                ))}
-              </Section>
+                </Horizon>
+              )}
+              {result.seasons && visible === "Seasons" && (
+                <Horizon>
+                  {result.seasons.map((season) => (
+                    <Poster
+                      key={season.id}
+                      id={season.id}
+                      imageUrl={season.poster_path}
+                      title={season.name}
+                    />
+                  ))}
+                </Horizon>
+              )}
+            </EtcContainer>
+          </Data>
+          <RightContainer>
+            {result.production_companies &&
+              result.production_companies.length > 0 && (
+                <Logo data={result.production_companies} group="logo" />
+              )}
+            {result.videos && result.videos.results.length > 0 && (
+              <Horizon title="Trailer">
+                <Youtube data={result.videos.results} />
+              </Horizon>
             )}
-            {result.created_by && visible === "Director" && (
-              <Section>
-                {result.created_by.map(director => (
-                  <Poster
-                    key={director.id}
-                    id={director.id}
-                    imageUrl={director.profile_path}
-                    title={director.name}
-                  />
-                ))}
-              </Section>
+            {cast && (
+              <Horizon title="Cast">
+                <Cast data={cast} />
+              </Horizon>
             )}
-            {result.belongs_to_collection && visible === "Collection" && (
-              <Section>
-                <Poster
-                  key={result.belongs_to_collection.id}
-                  id={result.belongs_to_collection.id}
-                  imageUrl={result.belongs_to_collection.poster_path}
-                  title={result.belongs_to_collection.name}
-                />
-              </Section>
-            )}
-            {result.seasons && visible === "Seasons" && (
-              <Section>
-                {result.seasons.map((season) => (
-                  <Poster
-                    key={season.id}
-                    id={season.id}
-                    imageUrl={season.poster_path}
-                    title={season.name}
-                  />
-                ))}
-              </Section>
-            )}
-          </EtcContainer>
-        </Data>
-        <RightContainer>
-        <Logo data={result.production_companies} group="logo" />
-        {result.videos && result.videos.results.length > 0 && (<Youtube data={result.videos.results}/>)}
-        <Cast data={cast}/>
-        </RightContainer>
-      </Content>
-      {error && <Message text={error} color={"#e74c3c"} />}
-    </Container>
+          </RightContainer>
+        </Content>
+        {error && <Message text={error} color={"#e74c3c"} />}
+      </Container>
+    )
   );
 };
 

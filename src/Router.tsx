@@ -14,8 +14,8 @@ function Router() {
       <Route exact path="/search" component={Search} />
       <Route path="/movie/:id" component={Detail} />
       <Route path="/show/:id" component={Detail} />
-      <Route path="/movies/:id" component={SeeMore}/>
-      <Route path="/shows/:id" component={SeeMore}/>
+      <Route path="/movies/:id" component={SeeMore} />
+      <Route path="/shows/:id" component={SeeMore} />
       <Redirect from="*" to="/" />
     </Switch>
   );

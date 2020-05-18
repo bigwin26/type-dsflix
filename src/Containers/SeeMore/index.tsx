@@ -1,49 +1,87 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import SeeMorePresenter from "../../Components/SeeMore/SeeMorePresenter";
 import * as Api from "../../lib/api";
 import { withRouter } from "react-router-dom";
 
-export default withRouter(({match}) => {
-  const [nowPlaying, setNowPlaying] = useState([]);
-  const [popular, setPopular] = useState([]);
-  const [upcoming, setUpcoming] = useState([]);
+export default withRouter(({ match }) => {
+  const { id } = match.params;
+  const { url } = match;
+
+  const [movieResult, setMovieResult] = useState([]);
+  const [showResult, setShowResult] = useState([]);
+  const [title, setTitle] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  useEffect(() => {
-    const {id} = match.params;
-    async function fetchData() {
-      setLoading(true);
-      try {
-        if(id === 'nowplaying'){
+  const MfetchData = useCallback(async () => {
+    setLoading(true);
+    try {
+      if (id === "nowplaying") {
         const {
           data: { results: nowplaying },
         } = await Api.movieApi.nowPlaying();
-        setNowPlaying(nowplaying);
-      } else if(id === 'popular'){
+        setMovieResult(nowplaying);
+        setTitle("Now Playing");
+      } else if (id === "popular") {
         const {
           data: { results: popular },
         } = await Api.movieApi.popular();
-        setPopular(popular);
-      } else if(id === 'upcoming'){
+        setMovieResult(popular);
+        setTitle("Popular");
+      } else if (id === "upcoming") {
         const {
           data: { results: upcoming },
         } = await Api.movieApi.upcoming();
-        setUpcoming(upcoming);
+        setMovieResult(upcoming);
+        setTitle("Up Coming");
       }
-      } catch (error) {
-        setError("영화정보를 불러올 수 없습니다.");
-      }
-      setLoading(false);
+    } catch (error) {
+      setError("영화정보를 불러올 수 없습니다.");
     }
-    fetchData();
-  }, [match.params]);
+    setLoading(false);
+  }, [id]);
+
+  const SfetchData = useCallback(async () => {
+    setLoading(true);
+    try {
+      if (id === "nowplaying") {
+        const {
+          data: { results: nowplaying },
+        } = await Api.movieApi.nowPlaying();
+        setMovieResult(nowplaying);
+        setTitle("Now Playing");
+      } else if (id === "popular") {
+        const {
+          data: { results: popular },
+        } = await Api.movieApi.popular();
+        setMovieResult(popular);
+        setTitle("Popular");
+      } else if (id === "upcoming") {
+        const {
+          data: { results: upcoming },
+        } = await Api.movieApi.upcoming();
+        setMovieResult(upcoming);
+        setTitle("Up Coming");
+      }
+    } catch (error) {
+      setError("영화정보를 불러올 수 없습니다.");
+    }
+    setLoading(false);
+  }, [id]);
+
+  useEffect(() => {
+    if (url.includes("movies")) {
+      MfetchData();
+    }
+    if (url.includes("shows")) {
+      SfetchData();
+    }
+  }, []);
 
   return (
     <SeeMorePresenter
-      nowPlaying={nowPlaying}
-      popular={popular}
-      upcoming={upcoming}
+      movieResult={movieResult}
+      title={title}
       loading={loading}
       error={error}
     />

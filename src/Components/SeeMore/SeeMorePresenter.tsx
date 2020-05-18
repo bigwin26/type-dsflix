@@ -13,7 +13,7 @@ const Container = styled.div`
   }
 `;
 
-interface Object {
+interface Movie {
   id: number;
   title: string;
   poster_path: string;
@@ -22,17 +22,15 @@ interface Object {
 }
 
 interface Ihome {
-  nowPlaying: Array<Object>;
-  popular: Array<Object>;
-  upcoming: Array<Object>;
+  movieResult: Array<Movie>;
+  title: string;
   loading: Boolean;
   error: String;
 }
 
 export default function HomePresenter({
-  nowPlaying,
-  popular,
-  upcoming,
+  movieResult,
+  title,
   loading,
   error,
 }: Ihome) {
@@ -48,39 +46,9 @@ export default function HomePresenter({
       <Helmet>
         <title>Movies | DSflix</title>
       </Helmet>
-      {nowPlaying && nowPlaying.length > 0 && (
-        <Section title="Now Playing">
-          {nowPlaying.map((movie) => (
-            <Poster
-              key={movie.id}
-              id={movie.id}
-              imageUrl={movie.poster_path}
-              title={movie.title}
-              rating={movie.vote_average}
-              year={movie.release_date && movie.release_date.substring(0, 4)}
-              isMovie={true}
-            />
-          ))}
-        </Section>
-      )}
-      {upcoming && upcoming.length > 0 && (
-        <Section title="Up Coming">
-          {upcoming.map((movie) => (
-            <Poster
-              key={movie.id}
-              id={movie.id}
-              imageUrl={movie.poster_path}
-              title={movie.title}
-              rating={movie.vote_average}
-              year={movie.release_date && movie.release_date.substring(0, 4)}
-              isMovie={true}
-            />
-          ))}
-        </Section>
-      )}
-      {popular && popular.length > 0 && (
-        <Section title="Popular">
-          {popular.map((movie) => (
+      {movieResult && movieResult.length > 0 && (
+        <Section title={title}>
+          {movieResult.map((movie) => (
             <Poster
               key={movie.id}
               id={movie.id}

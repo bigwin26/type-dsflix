@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Helmet } from "react-helmet";
-import Section from "../Common/Section";
+import Horizon from "../Common/Horizon";
 import Loader from "../Common/Loader";
 import Message from "../Common/Message";
 import Poster from "../Common/Poster";
@@ -49,7 +49,7 @@ export default function HomePresenter({
         <title>Movies | DSflix</title>
       </Helmet>
       {nowPlaying && nowPlaying.length > 0 && (
-        <Section title="Now Playing" path="/movies/nowplaying">
+        <Horizon title="Now Playing" path="/movies/nowplaying">
           {nowPlaying.map((movie) => (
             <Poster
               key={movie.id}
@@ -61,10 +61,10 @@ export default function HomePresenter({
               isMovie={true}
             />
           ))}
-        </Section>
+        </Horizon>
       )}
       {upcoming && upcoming.length > 0 && (
-        <Section title="Up Coming" path="/movies/upcoming">
+        <Horizon title="Up Coming" path="/movies/upcoming">
           {upcoming.map((movie) => (
             <Poster
               key={movie.id}
@@ -76,10 +76,10 @@ export default function HomePresenter({
               isMovie={true}
             />
           ))}
-        </Section>
+        </Horizon>
       )}
       {popular && popular.length > 0 && (
-        <Section title="Popular" path="/movies/popular">
+        <Horizon title="Popular" path="/movies/popular">
           {popular.map((movie) => (
             <Poster
               key={movie.id}
@@ -91,7 +91,7 @@ export default function HomePresenter({
               isMovie={true}
             />
           ))}
-        </Section>
+        </Horizon>
       )}
       {error && <Message text={error} color={"#e74c3c"} />}
     </Container>

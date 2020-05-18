@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import {Helmet} from "react-helmet";
-import Section from "../Common/Section";
+import { Helmet } from "react-helmet";
+import Horizon from "../Common/Horizon";
 import Message from "../Common/Message";
 import Poster from "../Common/Poster";
 import Loader from "../Common/Loader";
@@ -13,15 +13,39 @@ const Container = styled.div`
   }
 `;
 
-interface ITV{
-  topRated:Array<{id:number,poster_path:string,name:string,vote_average?:number,first_air_date:string}> | null,
-  popular:Array<{id:number,poster_path:string,name:string,vote_average?:number,first_air_date:string}> | null,
-  airingToday:Array<{id:number,poster_path:string,name:string,vote_average?:number,first_air_date:string}> | null,
-  loading:boolean,
-  error:string,
+interface ITV {
+  topRated: Array<{
+    id: number;
+    poster_path: string;
+    name: string;
+    vote_average?: number;
+    first_air_date: string;
+  }> | null;
+  popular: Array<{
+    id: number;
+    poster_path: string;
+    name: string;
+    vote_average?: number;
+    first_air_date: string;
+  }> | null;
+  airingToday: Array<{
+    id: number;
+    poster_path: string;
+    name: string;
+    vote_average?: number;
+    first_air_date: string;
+  }> | null;
+  loading: boolean;
+  error: string;
 }
 
-const TVPresenter = ({ topRated, popular, airingToday, loading, error }:ITV) => {
+const TVPresenter = ({
+  topRated,
+  popular,
+  airingToday,
+  loading,
+  error,
+}: ITV) => {
   return loading ? (
     <>
       <Helmet>
@@ -37,7 +61,7 @@ const TVPresenter = ({ topRated, popular, airingToday, loading, error }:ITV) => 
         <title>TV Show | DSflix</title>
       </Helmet>
       {topRated && topRated.length > 0 && (
-        <Section title="Top Rated">
+        <Horizon title="Top Rated" path="/shows/TopRated">
           {topRated.map((show) => (
             <Poster
               key={show.id}
@@ -48,10 +72,10 @@ const TVPresenter = ({ topRated, popular, airingToday, loading, error }:ITV) => 
               year={show.first_air_date && show.first_air_date.substring(0, 4)}
             />
           ))}
-        </Section>
+        </Horizon>
       )}
       {airingToday && airingToday.length > 0 && (
-        <Section title="Airing Today">
+        <Horizon title="Airing Today" path="/shows/AiringToday">
           {airingToday.map((show) => (
             <Poster
               key={show.id}
@@ -62,10 +86,10 @@ const TVPresenter = ({ topRated, popular, airingToday, loading, error }:ITV) => 
               year={show.first_air_date && show.first_air_date.substring(0, 4)}
             />
           ))}
-        </Section>
+        </Horizon>
       )}
       {popular && popular.length > 0 && (
-        <Section title="Popular">
+        <Horizon title="Popular" path="/shows/Popular">
           {popular.map((show) => (
             <Poster
               key={show.id}
@@ -76,7 +100,7 @@ const TVPresenter = ({ topRated, popular, airingToday, loading, error }:ITV) => 
               year={show.first_air_date && show.first_air_date.substring(0, 4)}
             />
           ))}
-        </Section>
+        </Horizon>
       )}
       {error && <Message text={error} color={"#e74c3c"} />}
     </Container>

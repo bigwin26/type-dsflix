@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -17,10 +16,6 @@ const Title = styled.span`
   margin-right: 5px;
 `;
 
-const StyledLink = styled(Link)`
-  background-color:black;
-`
-
 const Grid = styled.div`
   margin-top: 20px;
   display: grid;
@@ -35,14 +30,14 @@ const Grid = styled.div`
 
 interface ISection {
   title?: string;
-  path?:string;
+  path?: string;
   children: React.ReactNode;
 }
 
-const Section = ({ title, path, children }: ISection) => {
+const Section = ({ title, children }: ISection) => {
   return (
     <Container>
-      <Title>{title}</Title>{path && <StyledLink to={path}>더보기</StyledLink>}
+      <Title>{title}</Title>
       <Grid>{children}</Grid>
     </Container>
   );

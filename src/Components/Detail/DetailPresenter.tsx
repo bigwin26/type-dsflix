@@ -225,10 +225,7 @@ const DetailPresenter = ({
                   : require("lib/assets/noPosterSmall.png")
               }
             />
-            <Icon
-              src={require("lib/assets/youtube_icon.png")}
-              onClick={() => window.open(`${result.homepage}`)}
-            />
+            <button>GO TO WATCH</button>
           </CoverContainer>
           <Data>
             <Title>{result.title ? result.title : result.name}</Title>
@@ -272,12 +269,17 @@ const DetailPresenter = ({
             </ItemContainer>
             <Overview>{result.overview}</Overview>
             <TabContainer>
-              {similar && similar.length > 0 && (
+              {result.videos && result.videos.results.length > 0 && (
                 <TabItem
                   onClick={handleOnClick}
-                  selected={visible === "Similar"}
+                  selected={visible === "Trailer"}
                 >
-                  Similar
+                  Trailer
+                </TabItem>
+              )}
+              {cast && (
+                <TabItem onClick={handleOnClick} selected={visible === "Cast"}>
+                  Cast
                 </TabItem>
               )}
               {result.belongs_to_collection && (
@@ -296,8 +298,28 @@ const DetailPresenter = ({
                   Seasons
                 </TabItem>
               )}
+              {similar && similar.length > 0 && (
+                <TabItem
+                  onClick={handleOnClick}
+                  selected={visible === "Similar"}
+                >
+                  Similar
+                </TabItem>
+              )}
             </TabContainer>
             <EtcContainer>
+              {result.videos &&
+                result.videos.results.length > 0 &&
+                visible === "Trailer" && (
+                  <Horizon>
+                    <Youtube data={result.videos.results} />
+                  </Horizon>
+                )}
+              {cast && visible === "Cast" && (
+                <Horizon>
+                  <Cast data={cast} />
+                </Horizon>
+              )}
               {similar && similar.length > 0 && visible === "Similar" && (
                 <Horizon>
                   {similar.map((movie) => (
@@ -340,16 +362,6 @@ const DetailPresenter = ({
               result.production_companies.length > 0 && (
                 <Logo data={result.production_companies} group="logo" />
               )}
-            {result.videos && result.videos.results.length > 0 && (
-              <Horizon title="Trailer">
-                <Youtube data={result.videos.results} />
-              </Horizon>
-            )}
-            {cast && (
-              <Horizon title="Cast">
-                <Cast data={cast} />
-              </Horizon>
-            )}
           </RightContainer>
         </Content>
         {error && <Message text={error} color={"#e74c3c"} />}

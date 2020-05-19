@@ -44,24 +44,24 @@ export default withRouter(({ match }) => {
   const SfetchData = useCallback(async () => {
     setLoading(true);
     try {
-      if (id === "nowplaying") {
+      if (id === "TopRated") {
         const {
-          data: { results: nowplaying },
-        } = await Api.movieApi.nowPlaying();
-        setMovieResult(nowplaying);
-        setTitle("Now Playing");
-      } else if (id === "popular") {
+          data: { results: toprated },
+        } = await Api.tvApi.topRated();
+        setShowResult(toprated);
+        setTitle("Top Rated");
+      } else if (id === "AiringToday") {
+        const {
+          data: { results: airingtoday },
+        } = await Api.tvApi.airingToday();
+        setShowResult(airingtoday);
+        setTitle("Airing Today");
+      } else if (id === "Popular") {
         const {
           data: { results: popular },
-        } = await Api.movieApi.popular();
-        setMovieResult(popular);
+        } = await Api.tvApi.popular();
+        setShowResult(popular);
         setTitle("Popular");
-      } else if (id === "upcoming") {
-        const {
-          data: { results: upcoming },
-        } = await Api.movieApi.upcoming();
-        setMovieResult(upcoming);
-        setTitle("Up Coming");
       }
     } catch (error) {
       setError("영화정보를 불러올 수 없습니다.");
@@ -81,6 +81,7 @@ export default withRouter(({ match }) => {
   return (
     <SeeMorePresenter
       movieResult={movieResult}
+      showResult={showResult}
       title={title}
       loading={loading}
       error={error}

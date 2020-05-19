@@ -21,8 +21,17 @@ interface Movie {
   release_date: string;
 }
 
+interface Show {
+  id: number;
+  name: string;
+  poster_path: string;
+  vote_average: number;
+  first_air_date: string;
+}
+
 interface Ihome {
   movieResult: Array<Movie>;
+  showResult: Array<Show>;
   title: string;
   loading: Boolean;
   error: String;
@@ -30,6 +39,7 @@ interface Ihome {
 
 export default function HomePresenter({
   movieResult,
+  showResult,
   title,
   loading,
   error,
@@ -57,6 +67,20 @@ export default function HomePresenter({
               rating={movie.vote_average}
               year={movie.release_date && movie.release_date.substring(0, 4)}
               isMovie={true}
+            />
+          ))}
+        </Section>
+      )}
+       {showResult && showResult.length > 0 && (
+        <Section title={title}>
+          {showResult.map((show) => (
+            <Poster
+              key={show.id}
+              id={show.id}
+              imageUrl={show.poster_path}
+              title={show.name}
+              rating={show.vote_average}
+              year={show.first_air_date && show.first_air_date.substring(0, 4)}
             />
           ))}
         </Section>

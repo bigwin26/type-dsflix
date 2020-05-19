@@ -1,5 +1,6 @@
 # DS flix React 작업 완료 이후 타입스크립트 적용 + 추가작업
-- 순수 React 초기버전 https://github.com/bigwin26/dsflix
+
+- TS적용 전 초기버전 https://github.com/bigwin26/dsflix
 
 # DS's Blog FrontEnd with REACT , TS
 

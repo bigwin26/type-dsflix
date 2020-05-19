@@ -27,6 +27,7 @@ const HorizonContainer = styled.div`
   }
   @media (max-width: 768px) {
     -ms-overflow-style: none;
+    overflow-x:scroll;
   }
   scroll-behavior:smooth;
 `;

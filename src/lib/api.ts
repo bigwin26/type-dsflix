@@ -8,7 +8,7 @@ const api = axios.create({
 //language: "en-US"
 
 export const movieApi = {
-  nowPlaying: () => api.get("movie/now_playing"),
+  nowPlaying: (page?:number) => api.get("movie/now_playing",{params:{page}}),
   upcoming: () => api.get("movie/upcoming"),
   popular: () => api.get("movie/popular"),
   movieDetail: async (id: number) => {

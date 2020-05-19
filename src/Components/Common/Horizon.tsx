@@ -1,11 +1,6 @@
-import React from "react";
+import React,{useRef} from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-
-const Container = styled.div`
-  margin: 10px 0;
-  border-radius: 3px;
-`;
 
 const Title = styled.h2`
   display: inline-block;
@@ -25,6 +20,7 @@ const StyledLink = styled(Link)`
 const HorizonContainer = styled.div`
   overflow: auto;
   overflow-y: hidden;
+  overflow-x: hidden;
   white-space: nowrap;
   iframe {
     margin-right: 5px;
@@ -32,29 +28,44 @@ const HorizonContainer = styled.div`
   @media (max-width: 768px) {
     -ms-overflow-style: none;
   }
+  scroll-behavior:smooth;
 `;
 
-const ArrowButtonBlock = styled.div`
-  background-color: black;
+const ArrowContainer = styled.div`
+position:relative;
+`;
+
+const ArrowButtonBlock = styled.div<{direction:string}>`
   display: flex;
   position: absolute;
   top: 0px;
   z-index: 1;
-  right: 10px;
+  ${props=>props.direction === "left"?`left:10px;`:`right:10px;`};
   -webkit-box-align: center;
   align-items: center;
   height: 100%;
-  opacity: 0;
+  opacity:0;
   transition: all 300ms ease 0s;
 `;
 
-const ArrowButton = styled.div`
-width: 34px;
+const ArrowButton = styled.div<{direction:string}>`
+    width: 34px;
     height: 34px;
     opacity: 0.9;
     cursor: pointer;
-    background-color: black;
+    background-image: url(${(props) => props.direction === "left"? require('../../lib/assets/left-arrow.png'):require('../../lib/assets/right-arrow.png')});
+    background-repeat:no-repeat;
+    background-size:cover;
 `
+const Container = styled.div`
+  margin: 10px 0;
+  border-radius: 3px;
+  &:hover{
+    ${ArrowButtonBlock}{
+      opacity:0.9;
+    }
+  }
+`;
 
 interface IHorizon {
   title?: string;
@@ -63,12 +74,27 @@ interface IHorizon {
 }
 
 export default ({ children, path, title }: IHorizon) => {
+  const card = useRef<HTMLDivElement>(null);
   return (
     <Container>
       {title && <Title>{title}</Title>}
       {path && <StyledLink to={path}>더보기</StyledLink>}
-      <ArrowButtonBlock></ArrowButtonBlock>
-      <HorizonContainer>{children}</HorizonContainer>
+      <ArrowContainer>
+      <HorizonContainer ref={card}>{children}</HorizonContainer>
+      <ArrowButtonBlock direction="left"><ArrowButton direction="left"  onClick={()=>{
+        if (!card.current) {
+        return;
+      }
+      card.current.scrollLeft -= 400;
+      console.log(card.current?.scrollLeft);
+    }}/></ArrowButtonBlock>
+      <ArrowButtonBlock direction="right"><ArrowButton direction="right" 
+      onClick={()=>{
+        if (!card.current) {
+        return;
+      }
+      card.current.scrollLeft += 400}}/></ArrowButtonBlock>
+      </ArrowContainer>
     </Container>
   );
 };

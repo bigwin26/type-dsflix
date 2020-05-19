@@ -34,6 +34,28 @@ const HorizonContainer = styled.div`
   }
 `;
 
+const ArrowButtonBlock = styled.div`
+  background-color: black;
+  display: flex;
+  position: absolute;
+  top: 0px;
+  z-index: 1;
+  right: 10px;
+  -webkit-box-align: center;
+  align-items: center;
+  height: 100%;
+  opacity: 0;
+  transition: all 300ms ease 0s;
+`;
+
+const ArrowButton = styled.div`
+width: 34px;
+    height: 34px;
+    opacity: 0.9;
+    cursor: pointer;
+    background-color: black;
+`
+
 interface IHorizon {
   title?: string;
   path?: string;
@@ -45,6 +67,7 @@ export default ({ children, path, title }: IHorizon) => {
     <Container>
       {title && <Title>{title}</Title>}
       {path && <StyledLink to={path}>더보기</StyledLink>}
+      <ArrowButtonBlock></ArrowButtonBlock>
       <HorizonContainer>{children}</HorizonContainer>
     </Container>
   );

@@ -30,20 +30,21 @@ interface Show {
 }
 
 interface Ihome {
-  movieResult: Array<Movie>;
-  showResult: Array<Show>;
+  movieResult: Array<Movie> | null;
+  showResult: Array<Show> | null;
   title: string;
   loading: Boolean;
   error: String;
 }
 
-export default function HomePresenter({
+export default React.memo(function HomePresenter({
   movieResult,
   showResult,
   title,
   loading,
   error,
 }: Ihome) {
+  console.log("result", movieResult);
   return loading ? (
     <>
       <Helmet>
@@ -71,7 +72,7 @@ export default function HomePresenter({
           ))}
         </Section>
       )}
-       {showResult && showResult.length > 0 && (
+      {showResult && showResult.length > 0 && (
         <Section title={title}>
           {showResult.map((show) => (
             <Poster
@@ -88,4 +89,4 @@ export default function HomePresenter({
       {error && <Message text={error} color={"#e74c3c"} />}
     </Container>
   );
-}
+});

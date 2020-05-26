@@ -13,7 +13,7 @@ export default withRouter(({ history, location, match }) => {
   const [similar, setSimilar] = useState(null);
   const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState(true);
-  const [visible, setVisible] = useState("Similar");
+  const [visible, setVisible] = useState("");
 
   const setData = useCallback(async () => {
     try {

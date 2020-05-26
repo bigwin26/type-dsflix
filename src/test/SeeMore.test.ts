@@ -1,10 +1,15 @@
-import {movieApi} from '../lib/api'
+import { movieApi } from "../lib/api";
 
-describe('data Test',()=>{
-    it('get 2pages',async ()=>{
-        let results:any = [];
-        const {data: { results:nowPlaying1 }} = await movieApi.nowPlaying(1);
-        const {data: { results:nowPlaying2 }} = await movieApi.nowPlaying(2);
-        console.log(results);
-    })
-})
+describe("data Test", () => {
+  it("get 3pages", async () => {
+    let data: any[] = [];
+    for (let index = 1; index < 4; index++) {
+      const {
+        data: { results },
+      } = await movieApi.nowPlaying(index);
+      results.map((movie: any) => data.push(movie));
+    }
+    console.log(data);
+    console.log(data.length);
+  });
+});

@@ -61,7 +61,7 @@ const TVPresenter = ({
         <title>TV Show | DSflix</title>
       </Helmet>
       {topRated && topRated.length > 0 && (
-        <Horizon title="Top Rated" path="/shows/TopRated">
+        <Horizon title="Top Rated" path="/shows/topRated">
           {topRated.map((show) => (
             <Poster
               key={show.id}
@@ -75,7 +75,7 @@ const TVPresenter = ({
         </Horizon>
       )}
       {airingToday && airingToday.length > 0 && (
-        <Horizon title="Airing Today" path="/shows/AiringToday">
+        <Horizon title="Airing Today" path="/shows/airingToday">
           {airingToday.map((show) => (
             <Poster
               key={show.id}
@@ -89,7 +89,7 @@ const TVPresenter = ({
         </Horizon>
       )}
       {popular && popular.length > 0 && (
-        <Horizon title="Popular" path="/shows/Popular">
+        <Horizon title="Popular" path="/shows/popular">
           {popular.map((show) => (
             <Poster
               key={show.id}

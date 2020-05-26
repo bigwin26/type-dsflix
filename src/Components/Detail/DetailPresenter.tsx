@@ -91,7 +91,7 @@ const Title = styled.h3`
 
 const ItemContainer = styled.div`
   font-size: 13px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 `;
 
 const Item = styled.span`
@@ -102,6 +102,10 @@ const Item = styled.span`
 const Divider = styled.span`
   margin: 0 10px;
   vertical-align: middle;
+`;
+
+const Star = styled.div`
+  margin-bottom: 10px;
 `;
 
 const Overview = styled.p`
@@ -172,6 +176,8 @@ interface Result {
   genres: Array<{ name: string }>;
   imdb_id: number;
   overview: string;
+  vote_average: number;
+  vote_count: number;
   created_by: Array<{ id: number; profile_path: string; name: string }>;
   belongs_to_collection: { id: number; poster_path: string; name: string };
   seasons: Array<{ id: number; poster_path: string; name: string }>;
@@ -267,6 +273,9 @@ const DetailPresenter = ({
                 </>
               )}
             </ItemContainer>
+            <Star>
+              평점 ★{result.vote_average} {`(${result.vote_count}명)`}
+            </Star>
             <Overview>{result.overview}</Overview>
             <TabContainer>
               {result.videos && result.videos.results.length > 0 && (

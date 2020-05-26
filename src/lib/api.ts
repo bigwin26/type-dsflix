@@ -8,9 +8,10 @@ const api = axios.create({
 //language: "en-US"
 
 export const movieApi = {
-  nowPlaying: (page?:number) => api.get("movie/now_playing",{params:{page}}),
-  upcoming: () => api.get("movie/upcoming"),
-  popular: () => api.get("movie/popular"),
+  nowPlaying: (page?: number) =>
+    api.get("movie/now_playing", { params: { page } }),
+  upcoming: (page?: number) => api.get("movie/upcoming", { params: { page } }),
+  popular: (page?: number) => api.get("movie/popular", { params: { page } }),
   movieDetail: async (id: number) => {
     return await api.get(`movie/${id}`, {
       params: { append_to_response: "videos" },
@@ -21,14 +22,15 @@ export const movieApi = {
       params: { query: encodeURIComponent(term) },
     });
   },
-  credits: (movie_id:number) => api.get(`/movie/${movie_id}/credits`),
-  similar: (movie_id:number) => api.get(`/movie/${movie_id}/similar`),
+  credits: (movie_id: number) => api.get(`/movie/${movie_id}/credits`),
+  similar: (movie_id: number) => api.get(`/movie/${movie_id}/similar`),
 };
 
 export const tvApi = {
-  topRated: () => api.get("tv/top_rated"),
-  popular: () => api.get("tv/popular"),
-  airingToday: () => api.get("tv/airing_today"),
+  topRated: (page?: number) => api.get("tv/top_rated", { params: { page } }),
+  popular: (page?: number) => api.get("tv/popular", { params: { page } }),
+  airingToday: (page?: number) =>
+    api.get("tv/airing_today", { params: { page } }),
   tvDetail: (id: number) =>
     api.get(`tv/${id}`, { params: { append_to_response: "videos" } }),
   search: async (term: string) => {

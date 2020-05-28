@@ -2,43 +2,51 @@ import React, { useState, useEffect, useCallback } from "react";
 import DetailPresenter from "../../Components/Detail/DetailPresenter";
 import { withRouter } from "react-router-dom";
 import * as Api from "../../lib/api";
+import { useDispatch, useSelector } from "react-redux";
+import { getResult, getCast, getSimilar } from "modules/detail";
+import { RootState } from "modules";
 
 export default withRouter(({ history, location, match }) => {
   const { id } = match.params;
   const { push } = history;
   const { pathname } = location;
 
-  const [result, setResult] = useState(null);
-  const [cast, setCast] = useState(null);
-  const [similar, setSimilar] = useState(null);
   const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState(true);
   const [visible, setVisible] = useState("");
+
+  const dispatch = useDispatch();
+  const { result, cast, similar } = useSelector(
+    ({ detail: { result, cast, similar } }: RootState) => ({
+      result,
+      cast,
+      similar,
+    }),
+  );
 
   const setData = useCallback(async () => {
     try {
       setLoading(true);
       if (pathname.includes("/movie/")) {
         const { data: movieDetail } = await Api.movieApi.movieDetail(id);
-        setResult(movieDetail);
+        dispatch(getResult(movieDetail));
         const {
           data: { cast },
         } = await Api.movieApi.credits(id);
-        setCast(cast);
+        dispatch(getCast(cast));
         const {
           data: { results: similarList },
         } = await Api.movieApi.similar(id);
-        console.log(similarList);
-        setSimilar(similarList);
+        dispatch(getSimilar(similarList));
       } else if (pathname.includes("/show/")) {
         const { data: showDetail } = await Api.tvApi.tvDetail(id);
-        setResult(showDetail);
+        dispatch(getResult(showDetail));
       }
     } catch (error) {
       setError("존재하지 않는 정보입니다.");
     }
     setLoading(false);
-  }, [id, pathname]);
+  }, [id, pathname, dispatch]);
 
   const handleOnClick = (event: React.MouseEvent<HTMLLIElement>) => {
     setVisible(event.currentTarget.innerHTML);
@@ -48,10 +56,8 @@ export default withRouter(({ history, location, match }) => {
     if (isNaN(parseInt(id))) {
       push("/");
     }
-    if (result === null) {
-      setData();
-    }
-  }, [id, push, result, setData]);
+    setData();
+  }, [id, push, setData]);
 
   return (
     <DetailPresenter

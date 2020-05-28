@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
-import counter from "./counter";
+import detail from "./detail";
 
-const rootReducer = combineReducers({ counter });
+const rootReducer = combineReducers({ detail });
 
 export default rootReducer;
 export type RootState = ReturnType<typeof rootReducer>;

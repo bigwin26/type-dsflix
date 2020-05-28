@@ -206,6 +206,7 @@ const DetailPresenter = ({
   handleOnClick,
   visible,
 }: IDetail) => {
+  console.log(result);
   return loading ? (
     <>
       <Helmet>

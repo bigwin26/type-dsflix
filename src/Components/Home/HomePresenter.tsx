@@ -44,56 +44,67 @@ export default function HomePresenter({
       <Loader />
     </>
   ) : (
-    <Container>
-      <Helmet>
-        <title>Movies | DSflix</title>
-      </Helmet>
-      {nowPlaying && nowPlaying.length > 0 && (
-        <Horizon title="Now Playing" path="/movies/nowplaying">
-          {nowPlaying.map((movie) => (
-            <Poster
-              key={movie.id}
-              id={movie.id}
-              imageUrl={movie.poster_path}
-              title={movie.title}
-              rating={movie.vote_average}
-              year={movie.release_date && movie.release_date.substring(0, 4)}
-              isMovie={true}
-            />
-          ))}
-        </Horizon>
-      )}
-      {upcoming && upcoming.length > 0 && (
-        <Horizon title="Up Coming" path="/movies/upcoming">
-          {upcoming.map((movie) => (
-            <Poster
-              key={movie.id}
-              id={movie.id}
-              imageUrl={movie.poster_path}
-              title={movie.title}
-              rating={movie.vote_average}
-              year={movie.release_date && movie.release_date.substring(0, 4)}
-              isMovie={true}
-            />
-          ))}
-        </Horizon>
-      )}
-      {popular && popular.length > 0 && (
-        <Horizon title="Popular" path="/movies/popular">
-          {popular.map((movie) => (
-            <Poster
-              key={movie.id}
-              id={movie.id}
-              imageUrl={movie.poster_path}
-              title={movie.title}
-              rating={movie.vote_average}
-              year={movie.release_date && movie.release_date.substring(0, 4)}
-              isMovie={true}
-            />
-          ))}
-        </Horizon>
-      )}
-      {error && <Message text={error} color={"#e74c3c"} />}
-    </Container>
+    <>
+      <iframe
+        width="100%"
+        height="677"
+        src="https://www.youtube.com/embed/yhXT3hBaDoU"
+        frameBorder="0"
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+        title="깡"
+      ></iframe>
+      <Container>
+        <Helmet>
+          <title>Movies | DSflix</title>
+        </Helmet>
+        {nowPlaying && nowPlaying.length > 0 && (
+          <Horizon title="Now Playing" path="/movies/nowplaying">
+            {nowPlaying.map((movie) => (
+              <Poster
+                key={movie.id}
+                id={movie.id}
+                imageUrl={movie.poster_path}
+                title={movie.title}
+                rating={movie.vote_average}
+                year={movie.release_date && movie.release_date.substring(0, 4)}
+                isMovie={true}
+              />
+            ))}
+          </Horizon>
+        )}
+        {upcoming && upcoming.length > 0 && (
+          <Horizon title="Up Coming" path="/movies/upcoming">
+            {upcoming.map((movie) => (
+              <Poster
+                key={movie.id}
+                id={movie.id}
+                imageUrl={movie.poster_path}
+                title={movie.title}
+                rating={movie.vote_average}
+                year={movie.release_date && movie.release_date.substring(0, 4)}
+                isMovie={true}
+              />
+            ))}
+          </Horizon>
+        )}
+        {popular && popular.length > 0 && (
+          <Horizon title="Popular" path="/movies/popular">
+            {popular.map((movie) => (
+              <Poster
+                key={movie.id}
+                id={movie.id}
+                imageUrl={movie.poster_path}
+                title={movie.title}
+                rating={movie.vote_average}
+                year={movie.release_date && movie.release_date.substring(0, 4)}
+                isMovie={true}
+              />
+            ))}
+          </Horizon>
+        )}
+        {error && <Message text={error} color={"#e74c3c"} />}
+      </Container>
+    </>
   );
 }

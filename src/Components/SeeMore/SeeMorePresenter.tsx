@@ -44,7 +44,6 @@ export default React.memo(function HomePresenter({
   loading,
   error,
 }: Ihome) {
-  console.log("result", movieResult);
   return loading ? (
     <>
       <Helmet>

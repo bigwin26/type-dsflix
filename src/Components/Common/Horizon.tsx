@@ -76,25 +76,22 @@ interface IHorizon {
 
 export default ({ children, path, title }: IHorizon) => {
   const card = useRef<HTMLDivElement>(null);
+  const scroll = (e:React.MouseEvent) => {
+    if (!card.current) {
+      return;
+    }
+    const direction = e.currentTarget.getAttribute('direction');
+    direction === 'left'? card.current.scrollLeft -= 400:card.current.scrollLeft += 400;
+  }
+
   return (
     <Container>
       {title && <Title>{title}</Title>}
       {path && <StyledLink to={path}>더보기</StyledLink>}
       <ArrowContainer>
       <HorizonContainer ref={card}>{children}</HorizonContainer>
-      <ArrowButtonBlock direction="left"><ArrowButton direction="left"  onClick={()=>{
-        if (!card.current) {
-        return;
-      }
-      card.current.scrollLeft -= 400;
-      console.log(card.current?.scrollLeft);
-    }}/></ArrowButtonBlock>
-      <ArrowButtonBlock direction="right"><ArrowButton direction="right" 
-      onClick={()=>{
-        if (!card.current) {
-        return;
-      }
-      card.current.scrollLeft += 400}}/></ArrowButtonBlock>
+      <ArrowButtonBlock direction="left" ><ArrowButton direction="left" onClick={scroll}/></ArrowButtonBlock>
+      <ArrowButtonBlock direction="right" ><ArrowButton direction="right" onClick={scroll}/></ArrowButtonBlock>
       </ArrowContainer>
     </Container>
   );

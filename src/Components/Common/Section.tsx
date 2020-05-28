@@ -19,7 +19,7 @@ const Title = styled.span`
 const Grid = styled.div`
   margin-top: 20px;
   display: grid;
-  grid-template-columns: repeat(auto-fill, 125px);
+  grid-template-columns: repeat(auto-fill, 185px);
   grid-gap: 20px;
   text-align: center;
   justify-content: flex-start;

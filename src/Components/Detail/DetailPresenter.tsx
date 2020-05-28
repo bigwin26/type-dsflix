@@ -71,8 +71,9 @@ const Cover = styled.div<{ Bgimg: string }>`
 `;
 
 const Data = styled.div`
-  width: 40%;
+  width: 70%;
   margin-left: 30px;
+  overflow:auto;
   @media (max-width: 768px) {
     width: 100%;
     text-align: center;
@@ -126,40 +127,10 @@ const Icon = styled.img<{ src: string }>`
   align-self: center;
 `;
 
-const TabContainer = styled.ul`
-  margin-top: 20px;
-  display: flex;
-  @media (max-width: 768px) {
-    justify-content: center;
-  }
-`;
-
-const TabItem = styled.li<{ selected: boolean }>`
-  border-radius: 3px;
-  border: solid black 3px;
-  padding: 5px;
-  margin-right: 20px;
-  text-transform: uppercase;
-  font-weight: 600;
-  color: ${(props) => (props.selected ? "black" : "white")};
-  opacity: ${(props) => (props.selected ? "0.8" : "0.5")};
-  background-color: ${(props) => (props.selected ? "white" : "black")};
-  cursor: pointer;
-  &:hover {
-    opacity: 0.1;
-  }
-`;
-
 const EtcContainer = styled.div`
   width: 85%;
   border-radius: 3px;
   opacity: 0.8;
-`;
-
-const RightContainer = styled.div`
-  width: 30%;
-  display: flex;
-  flex-direction: column;
 `;
 
 interface Result {
@@ -193,8 +164,6 @@ interface IDetail {
   cast: Array<any> | null;
   error: string;
   loading: boolean;
-  handleOnClick: (event: React.MouseEvent<HTMLLIElement>) => void;
-  visible: string;
 }
 
 const DetailPresenter = ({
@@ -203,8 +172,6 @@ const DetailPresenter = ({
   cast,
   error,
   loading,
-  handleOnClick,
-  visible,
 }: IDetail) => {
   console.log(result);
   return loading ? (
@@ -278,73 +245,33 @@ const DetailPresenter = ({
               평점 ★{result.vote_average} {`(${result.vote_count}명)`}
             </Star>
             <Overview>{result.overview}</Overview>
-            <TabContainer>
-              {result.videos && result.videos.results.length > 0 && (
-                <TabItem
-                  onClick={handleOnClick}
-                  selected={visible === "Trailer"}
-                >
-                  Trailer
-                </TabItem>
-              )}
-              {cast && (
-                <TabItem onClick={handleOnClick} selected={visible === "Cast"}>
-                  Cast
-                </TabItem>
-              )}
-              {result.belongs_to_collection && (
-                <TabItem
-                  onClick={handleOnClick}
-                  selected={visible === "Collection"}
-                >
-                  Collection
-                </TabItem>
-              )}
-              {result.seasons && (
-                <TabItem
-                  onClick={handleOnClick}
-                  selected={visible === "Seasons"}
-                >
-                  Seasons
-                </TabItem>
-              )}
-              {similar && similar.length > 0 && (
-                <TabItem
-                  onClick={handleOnClick}
-                  selected={visible === "Similar"}
-                >
-                  Similar
-                </TabItem>
-              )}
-            </TabContainer>
             <EtcContainer>
-              {result.videos &&
-                result.videos.results.length > 0 &&
-                visible === "Trailer" && (
-                  <Horizon>
-                    <Youtube data={result.videos.results} />
-                  </Horizon>
-                )}
-              {cast && visible === "Cast" && (
-                <Horizon>
+              {cast && (
+                <Horizon title="CAST">
                   <Cast data={cast} />
                 </Horizon>
               )}
-              {similar && similar.length > 0 && visible === "Similar" && (
-                <Horizon>
+              {result.videos &&
+                result.videos.results.length > 0 &&(
+                  <Horizon title="TRAILER">
+                    <Youtube data={result.videos.results} />
+                  </Horizon>
+                )}
+              {similar && similar.length > 0 && (
+                <Horizon title="SIMILAR">
                   {similar.map((movie) => (
                     <Poster
                       key={movie.id}
                       id={movie.id}
-                      imageUrl={movie.backdrop_path}
+                      imageUrl={movie.poster_path}
                       title={movie.title}
                       isMovie={true}
                     />
                   ))}
                 </Horizon>
               )}
-              {result.belongs_to_collection && visible === "Collection" && (
-                <Horizon>
+              {result.belongs_to_collection && (
+                <Horizon title="COLLECTION">
                   <Poster
                     key={result.belongs_to_collection.id}
                     id={result.belongs_to_collection.id}
@@ -353,8 +280,8 @@ const DetailPresenter = ({
                   />
                 </Horizon>
               )}
-              {result.seasons && visible === "Seasons" && (
-                <Horizon>
+              {result.seasons && (
+                <Horizon title="SEASON">
                   {result.seasons.map((season) => (
                     <Poster
                       key={season.id}
@@ -365,14 +292,12 @@ const DetailPresenter = ({
                   ))}
                 </Horizon>
               )}
-            </EtcContainer>
-          </Data>
-          <RightContainer>
-            {result.production_companies &&
+                          {result.production_companies &&
               result.production_companies.length > 0 && (
                 <Logo data={result.production_companies} group="logo" />
               )}
-          </RightContainer>
+            </EtcContainer>
+          </Data>
         </Content>
         {error && <Message text={error} color={"#e74c3c"} />}
       </Container>

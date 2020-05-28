@@ -13,7 +13,6 @@ export default withRouter(({ history, location, match }) => {
 
   const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState(true);
-  const [visible, setVisible] = useState("");
 
   const dispatch = useDispatch();
   const { result, cast, similar } = useSelector(
@@ -48,10 +47,6 @@ export default withRouter(({ history, location, match }) => {
     setLoading(false);
   }, [id, pathname, dispatch]);
 
-  const handleOnClick = (event: React.MouseEvent<HTMLLIElement>) => {
-    setVisible(event.currentTarget.innerHTML);
-  };
-
   useEffect(() => {
     if (isNaN(parseInt(id))) {
       push("/");
@@ -66,8 +61,6 @@ export default withRouter(({ history, location, match }) => {
       cast={cast}
       error={error}
       loading={loading}
-      handleOnClick={handleOnClick}
-      visible={visible}
     />
   );
 });

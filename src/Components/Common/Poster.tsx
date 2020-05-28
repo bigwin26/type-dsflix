@@ -16,8 +16,8 @@ const StyledLink = styled(Link)`
 
 const Image = styled.div<{ bgUrl?: string }>`
   background-image: url(${(props) => props.bgUrl});
-  height: 180px;
-  width: 125px;
+  height: 275px;
+  width: 185px;
   background-size: cover;
   border-radius: 4px;
 `;

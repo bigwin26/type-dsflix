@@ -39,3 +39,8 @@ export const tvApi = {
     });
   },
 };
+
+export const actorApi = {
+  movie_credits:(actor_id:number) => api.get(`/person/${actor_id}/movie_credits`),
+  tv_credits:(actor_id:number) => api.get(`/person/${actor_id}/tv_credits`),
+}

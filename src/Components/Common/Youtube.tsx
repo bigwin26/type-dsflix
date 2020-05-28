@@ -10,8 +10,8 @@ const Youtube = ({ data }: IYoutube) => {
       {data.map((video, index) => (
         <iframe
           key={index}
-          width="inherit"
-          height="inherit"
+          width="400"
+          height="200"
           src={`https://www.youtube.com/embed/${video.key}`}
           frameBorder="0"
           allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"

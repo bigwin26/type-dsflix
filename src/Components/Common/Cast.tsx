@@ -35,12 +35,12 @@ const ImageContainer = styled.li`
   }
 `;
 
-const Title = styled.span`
+const Name = styled.span`
   display: block;
   margin-bottom: 3px;
 `;
 
-const Year = styled.span`
+const Character = styled.span`
   font-size: 10px;
   color: rgba(255, 255, 255, 0.5);
 `;
@@ -73,8 +73,8 @@ const Cast = ({ data }: ICast) => {
                 }
               />
             </ImageContainer>
-            <Title>{actor.name}</Title>
-            <Year>{actor.character}</Year>
+            <Name>{actor.name}</Name>
+            <Character>{actor.character.length > 20 ? `${actor.character.slice(0,20)}...`: actor.character}</Character>
           </StyledLink>
         ))}
     </Container>

@@ -25,6 +25,7 @@ const Grid = styled.div`
   justify-content: flex-start;
   @media (max-width: 768px) {
     justify-content: center;
+    grid-template-columns: repeat(auto-fill, 125px);
   }
 `;
 

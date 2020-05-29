@@ -3,7 +3,7 @@ import DetailPresenter from "../../Components/Detail/DetailPresenter";
 import { withRouter } from "react-router-dom";
 import * as Api from "../../lib/api";
 import { useDispatch, useSelector } from "react-redux";
-import { getResult, getCast, getSimilar } from "modules/detail";
+import { getResult, getCast, getSimilar, cleanUp } from "modules/detail";
 import { RootState } from "modules";
 
 export default withRouter(({ history, location, match }) => {
@@ -52,7 +52,8 @@ export default withRouter(({ history, location, match }) => {
       push("/");
     }
     setData();
-  }, [id, push, setData]);
+    return ()=>{dispatch(cleanUp());}
+  }, [id, push, setData,dispatch]);
 
   return (
     <DetailPresenter

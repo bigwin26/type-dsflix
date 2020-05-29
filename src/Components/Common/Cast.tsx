@@ -5,10 +5,10 @@ import { Link } from "react-router-dom";
 const Container = styled.ul`
   font-size: 12px;
   color: white;
-  text-align: center;
 `;
 
 const StyledLink = styled(Link)`
+  text-align: center;
   display: inline-block;
   :first-child {
     margin-left: 10px;
@@ -63,7 +63,7 @@ const Cast = ({ data }: ICast) => {
     <Container>
       {data &&
         data.map((actor, index) => (
-          <StyledLink to="" key={index}>
+          <StyledLink to={`/actor/${actor.id}`} key={index}>
             <ImageContainer>
               <Image
                 bgUrl={

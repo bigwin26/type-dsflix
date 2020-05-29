@@ -5,6 +5,7 @@ import Section from "../Common/Section";
 import Loader from "../Common/Loader";
 import Message from "../Common/Message";
 import Poster from "../Common/Poster";
+import { Movie, TV } from "lib/types";
 
 const Container = styled.div`
   padding: 0px 10px 0px 30px;
@@ -25,8 +26,8 @@ const Input = styled.input`
 `;
 
 interface ISearch{
-  movieResults:Array<{id:number,poster_path:string,title:string,vote_average?:number,release_date:string}> | null,
-  tvResults:Array<{id:number,poster_path:string,name:string,vote_average?:number,first_air_date:string}> | null,
+  movieResults:Array<Movie> | null,
+  tvResults:Array<TV> | null,
   loading:boolean,
   error:string,
   handleSubmit:(event: React.FormEvent<HTMLFormElement>)=>void,

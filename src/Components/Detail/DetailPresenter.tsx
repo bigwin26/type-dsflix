@@ -8,6 +8,7 @@ import Poster from "../Common/Poster";
 import Logo from "../Common/Logo";
 import Cast from "../Common/Cast";
 import Horizon from "Components/Common/Horizon";
+import { Detail } from "lib/types";
 
 const Container = styled.div`
   height: calc(100vh - 50px);
@@ -133,34 +134,9 @@ const EtcContainer = styled.div`
   opacity: 0.8;
 `;
 
-interface Result {
-  id: number;
-  title: string;
-  name: string;
-  backdrop_path: string;
-  poster_path: string;
-  homepage: string;
-  release_date: string;
-  first_air_date: string;
-  runtime: number;
-  episode_run_time: Array<number>;
-  genres: Array<{ name: string }>;
-  imdb_id: number;
-  overview: string;
-  vote_average: number;
-  vote_count: number;
-  created_by: Array<{ id: number; profile_path: string; name: string }>;
-  belongs_to_collection: { id: number; poster_path: string; name: string };
-  seasons: Array<{ id: number; poster_path: string; name: string }>;
-  videos: {
-    results: Array<{ key: string; src: string; title: string; name: string }>;
-  };
-  production_companies: Array<{ id: number; logo_path: string; name: string }>;
-}
-
-interface IDetail {
-  result: Result | null;
-  similar: Array<Result> | null;
+type IDetail = {
+  result: Detail | null;
+  similar: Array<Detail> | null;
   cast: Array<any> | null;
   error: string;
   loading: boolean;
@@ -199,7 +175,6 @@ const DetailPresenter = ({
                   : require("lib/assets/noPosterSmall.png")
               }
             />
-            <button>GO TO WATCH</button>
           </CoverContainer>
           <Data>
             <Title>{result.title ? result.title : result.name}</Title>
@@ -270,29 +245,21 @@ const DetailPresenter = ({
                   ))}
                 </Horizon>
               )}
-              {result.belongs_to_collection && (
-                <Horizon title="COLLECTION">
-                  <Poster
-                    key={result.belongs_to_collection.id}
-                    id={result.belongs_to_collection.id}
-                    imageUrl={result.belongs_to_collection.poster_path}
-                    title={result.belongs_to_collection.name}
-                  />
-                </Horizon>
-              )}
               {result.seasons && (
                 <Horizon title="SEASON">
                   {result.seasons.map((season) => (
                     <Poster
                       key={season.id}
-                      id={season.id}
+                      id={result.id}
                       imageUrl={season.poster_path}
                       title={season.name}
+                      hasSub={true}
+                      sub_id={season.season_number}
                     />
                   ))}
                 </Horizon>
               )}
-                          {result.production_companies &&
+              {result.production_companies &&
               result.production_companies.length > 0 && (
                 <Logo data={result.production_companies} group="logo" />
               )}

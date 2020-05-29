@@ -18,6 +18,10 @@ const Image = styled.div<{ bgUrl?: string }>`
   background-image: url(${(props) => props.bgUrl});
   height: 275px;
   width: 185px;
+  @media (max-width: 768px) {
+    height: 185px;
+    width: 125px;
+  }
   background-size: cover;
   border-radius: 4px;
 `;
@@ -58,11 +62,13 @@ interface IPoster {
   rating?: number;
   year?: string;
   isMovie?: boolean;
+  hasSub?:boolean;
+  sub_id?:number;
 }
 
-const Poster = ({ id, imageUrl, title, year, isMovie = false }: IPoster) => {
+const Poster = ({ id, imageUrl, title, year, isMovie = false, hasSub = false , sub_id }: IPoster) => {
   return (
-    <StyledLink to={isMovie ? `/movie/${id}` : `/show/${id}`}>
+    <StyledLink to={hasSub?`/show/${id}/season/${sub_id}`: isMovie?`/movie/${id}`:`/show/${id}`}>
       <Container>
         <ImageContainer>
           <Image

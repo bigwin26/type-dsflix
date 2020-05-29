@@ -5,6 +5,7 @@ import Horizon from "../Common/Horizon";
 import Message from "../Common/Message";
 import Poster from "../Common/Poster";
 import Loader from "../Common/Loader";
+import { TV } from "lib/types";
 
 const Container = styled.div`
   padding: 0px 10px 0px 30px;
@@ -14,27 +15,9 @@ const Container = styled.div`
 `;
 
 interface ITV {
-  topRated: Array<{
-    id: number;
-    poster_path: string;
-    name: string;
-    vote_average?: number;
-    first_air_date: string;
-  }> | null;
-  popular: Array<{
-    id: number;
-    poster_path: string;
-    name: string;
-    vote_average?: number;
-    first_air_date: string;
-  }> | null;
-  airingToday: Array<{
-    id: number;
-    poster_path: string;
-    name: string;
-    vote_average?: number;
-    first_air_date: string;
-  }> | null;
+  topRated: Array<TV> | null;
+  popular: Array<TV> | null;
+  airingToday: Array<TV> | null;
   loading: boolean;
   error: string;
 }

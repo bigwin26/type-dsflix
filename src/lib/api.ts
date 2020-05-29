@@ -38,9 +38,11 @@ export const tvApi = {
       params: { query: encodeURIComponent(term) },
     });
   },
+  season:(tv_id:number,season_number:number)=>api.get(`/tv/${tv_id}/season/${season_number}`),
 };
 
 export const actorApi = {
+  actor:(actor_id:number)=> api.get(`/person/${actor_id}`),
   movie_credits:(actor_id:number) => api.get(`/person/${actor_id}/movie_credits`),
   tv_credits:(actor_id:number) => api.get(`/person/${actor_id}/tv_credits`),
 }

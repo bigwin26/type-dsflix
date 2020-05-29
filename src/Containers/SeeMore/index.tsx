@@ -12,34 +12,31 @@ export default withRouter(({ match }) => {
   const [title, setTitle] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [page, setPage] = useState(2);
+  const [page, setPage] = useState(1);
 
-  const MfetchData = useCallback(async () => {
+  const MfetchData = useCallback(async (page) => {
     setLoading(true);
     try {
       if (id === "nowplaying") {
-        for (let index = 1; index < 3; index++) {
           const {
             data: { results: nowplaying },
-          } = await Api.movieApi.nowPlaying(index);
-          nowplaying.map((movie: any) => movieResult.push(movie));
-          setMovieResult(movieResult);
-        }
-        console.log(movieResult);
-        setTitle("Now Playing");
+          } = await Api.movieApi.nowPlaying(page);
+          const newResult = movieResult.concat(...nowplaying);
+          setMovieResult(newResult);
+          setTitle("Now Playing");
       } else if (id === "popular") {
         const {
           data: { results: popular },
-        } = await Api.movieApi.popular();
-        popular.map((movie: any) => movieResult.push(movie));
-        setMovieResult(movieResult);
+        } = await Api.movieApi.popular(page);
+        const newResult = movieResult.concat(...popular);
+        setMovieResult(newResult);
         setTitle("Popular");
       } else if (id === "upcoming") {
         const {
           data: { results: upcoming },
-        } = await Api.movieApi.upcoming();
-        upcoming.map((movie: any) => movieResult.push(movie));
-        setMovieResult(movieResult);
+        } = await Api.movieApi.upcoming(page);
+        const newResult = movieResult.concat(...upcoming);
+        setMovieResult(newResult);
         setTitle("Up Coming");
       }
     } catch (error) {
@@ -76,19 +73,22 @@ export default withRouter(({ match }) => {
     setLoading(false);
   }, [id]);
 
-  const infiniteScroll = () => {
+  const infiniteScroll = useCallback(() => {
     const scrollHeight = document.documentElement.scrollHeight;
     const scrollTop = document.documentElement.scrollTop;
     const clientHeight = document.documentElement.clientHeight;
     console.log(scrollHeight, scrollTop, clientHeight);
     if (scrollTop + clientHeight + 10 >= scrollHeight) {
-      setPage(page + 1);
+      const newpage = page+1;
+      console.log('page',newpage);
+      setPage(newpage);
+      console.log('page',page);
     }
-  };
+  },[page]);
 
   useEffect(() => {
     if (url.includes("movies")) {
-      MfetchData();
+      MfetchData(page);
     }
     if (url.includes("shows")) {
       SfetchData();
@@ -97,7 +97,7 @@ export default withRouter(({ match }) => {
     return () => {
       window.removeEventListener("scroll", infiniteScroll);
     };
-  }, []);
+  }, [page]);
 
   return (
     <SeeMorePresenter

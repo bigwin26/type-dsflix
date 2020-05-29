@@ -5,6 +5,7 @@ import Horizon from "../Common/Horizon";
 import Loader from "../Common/Loader";
 import Message from "../Common/Message";
 import Poster from "../Common/Poster";
+import { Movie } from "lib/types";
 
 const Container = styled.div`
   padding: 0px 10px 0px 30px;
@@ -13,18 +14,10 @@ const Container = styled.div`
   }
 `;
 
-interface Object {
-  id: number;
-  title: string;
-  poster_path: string;
-  vote_average: number;
-  release_date: string;
-}
-
-interface Ihome {
-  nowPlaying: Array<Object>;
-  popular: Array<Object>;
-  upcoming: Array<Object>;
+type Ihome = {
+  nowPlaying: Array<Movie>;
+  popular: Array<Movie>;
+  upcoming: Array<Movie>;
   loading: Boolean;
   error: String;
 }
@@ -45,7 +38,7 @@ export default function HomePresenter({
     </>
   ) : (
     <>
-      <iframe
+{/*       <iframe
         width="100%"
         height="677"
         src="https://www.youtube.com/embed/yhXT3hBaDoU?autoplay=1"
@@ -53,7 +46,7 @@ export default function HomePresenter({
         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen
         title="깡"
-      ></iframe>
+      ></iframe> */}
       <Container>
         <Helmet>
           <title>Movies | DSflix</title>

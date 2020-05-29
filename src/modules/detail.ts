@@ -1,6 +1,10 @@
-const GET_RESULT = "detail/GET_RESULT" as const;
+import { createRequestActionTypes } from "lib/createRequestSaga";
+import { Detail } from "lib/types";
+
+const [GET_RESULT,SUCCES_GET_RESULT,FAILURE_GET_RESULT] = createRequestActionTypes("detail/GET_RESULT" as const);
 const GET_CAST = "detail/GET_CAST" as const;
 const GET_SIMILAR = "detail/GET_SIMILAR" as const;
+const CLEAN_UP = "detail/CLEAN_UP" as const;
 
 export const getResult = (result: object) => ({
   type: GET_RESULT,
@@ -14,44 +18,18 @@ export const getSimilar = (result: object) => ({
   type: GET_SIMILAR,
   payload: result,
 });
+export const cleanUp = () => ({
+  type:CLEAN_UP,
+});
 
 type CounterAction =
   | ReturnType<typeof getResult>
   | ReturnType<typeof getCast>
   | ReturnType<typeof getSimilar>;
 
-type Result = {
-  id: number;
-  title: string;
-  name: string;
-  backdrop_path: string;
-  poster_path: string;
-  homepage: string;
-  release_date: string;
-  first_air_date: string;
-  runtime: number;
-  episode_run_time: Array<number>;
-  genres: Array<{ name: string }>;
-  imdb_id: number;
-  overview: string;
-  vote_average: number;
-  vote_count: number;
-  created_by: Array<{ id: number; profile_path: string; name: string }>;
-  belongs_to_collection: { id: number; poster_path: string; name: string };
-  seasons: Array<{ id: number; poster_path: string; name: string }>;
-  videos: {
-    results: Array<{ key: string; src: string; title: string; name: string }>;
-  };
-  production_companies: Array<{
-    id: number;
-    logo_path: string;
-    name: string;
-  }>;
-};
-
 type DetailState = {
-  result: Result | null;
-  similar: Array<Result> | null;
+  result: Detail | null;
+  similar: Array<Detail> | null;
   cast: Array<any> | null;
 };
 
@@ -69,6 +47,8 @@ function detail(state: DetailState = initialState, action: CounterAction) {
       return { ...state, cast: action.payload };
     case GET_SIMILAR:
       return { ...state, similar: action.payload };
+    case CLEAN_UP:
+      return initialState;
     default:
       return state;
   }

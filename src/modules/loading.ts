@@ -1,31 +1,30 @@
-const START_LOADING = 'loading/START_LOADING' as const;
-const FINISH_LOADING = 'loading/FINISH_LOADING' as const;
+const START_LOADING = "loading/START_LOADING" as const;
+const FINISH_LOADING = "loading/FINISH_LOADING" as const;
 
-export const startLoading = (requestType:any) => ({
+export const startLoading = () => ({
   type: START_LOADING,
-  payload:requestType,
 });
-export const finishLoading = (requestType:any) => ({
-    type: FINISH_LOADING,
-    payload:requestType,
-  });
+export const finishLoading = () => ({
+  type: FINISH_LOADING,
+});
 
-type CounterAction =
+type LoadAction =
   | ReturnType<typeof startLoading>
   | ReturnType<typeof finishLoading>;
 
 const initialState = {
+  loading: false,
 };
 
-function detail(state = initialState, action: CounterAction) {
+function loading(state = initialState, action: LoadAction) {
   switch (action.type) {
     case START_LOADING:
-      return { ...state, [action.payload]:true };
+      return { ...state, loading: true };
     case FINISH_LOADING:
-      return { ...state, [action.payload]:false  };
+      return { ...state, loading: false };
     default:
       return state;
   }
 }
 
-export default detail;
+export default loading;

@@ -1,43 +1,59 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import HomePresenter from "../../Components/Home/HomePresenter";
-import * as Api from "../../lib/api";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "modules";
+import { init } from "modules/movie";
 
 export default () => {
-  const [nowPlaying, setNowPlaying] = useState([]);
-  const [popular, setPopular] = useState([]);
-  const [upcoming, setUpcoming] = useState([]);
+  const dispatch = useDispatch();
+  const { nowPlaying, popular, upcoming, error } = useSelector(
+    ({ movie }: RootState) => ({
+      nowPlaying: movie.nowPlaying,
+      popular: movie.popular,
+      upcoming: movie.upComing,
+      error: movie.error,
+    }),
+  );
+  const [mainMovie, setMainMovie] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+
+  const getRandomNumber = (number: number) => {
+    const random = Math.floor(Math.random() * number);
+    return random;
+  };
+
+  const getMainMovie = useCallback((movies) => {
+    const filterdMovie = movies.filter(
+      (movie: any) => movie.backdrop_path !== null,
+    );
+    const number = getRandomNumber(filterdMovie.length);
+    const movie = filterdMovie[number];
+    setMainMovie(movie);
+  }, []);
 
   useEffect(() => {
-    async function fetchData() {
+    if ((nowPlaying && upcoming && popular) === null) {
       setLoading(true);
-      try {
-        const {
-          data: { results: nowplaying },
-        } = await Api.movieApi.nowPlaying();
-        setNowPlaying(nowplaying);
-        const {
-          data: { results: popular },
-        } = await Api.movieApi.popular();
-        setPopular(popular);
-        const {
-          data: { results: upcoming },
-        } = await Api.movieApi.upcoming();
-        setUpcoming(upcoming);
-      } catch (error) {
-        setError("영화정보를 불러올 수 없습니다.");
-      }
+      dispatch(init());
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (upcoming !== null) {
+      getMainMovie(upcoming);
+    }
+    if (nowPlaying && upcoming && popular !== null) {
       setLoading(false);
     }
-    fetchData();
-  }, []);
+  }, [getMainMovie, upcoming, nowPlaying, popular]);
 
   return (
     <HomePresenter
       nowPlaying={nowPlaying}
       popular={popular}
       upcoming={upcoming}
+      mainMovie={mainMovie}
       loading={loading}
       error={error}
     />

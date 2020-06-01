@@ -1,7 +1,7 @@
-import { movieApi,tvApi } from "../lib/api";
-import { uniqBy,uniq } from "lodash";
+import { movieApi, tvApi } from "../lib/api";
+import { uniqBy, uniq } from "lodash";
 describe("data Test", () => {
-/*   it("get 3pages", async () => {
+  /*   it("get 3pages", async () => {
     let data: any[] = [];
     for (let index = 1; index < 10; index++) {
       const {
@@ -18,7 +18,11 @@ describe("data Test", () => {
     console.log(data.length);
   }); */
   it("get season", async () => {
-    const {data:{episodes}} = await tvApi.season(85937,1);
+    const {
+      data: { episodes },
+    } = await tvApi.season(85937, 1);
     console.log(episodes);
+    const random = Math.floor(Math.random() * episodes.length);
+    console.log(random);
   });
 });

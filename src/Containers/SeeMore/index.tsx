@@ -14,36 +14,39 @@ export default withRouter(({ match }) => {
   const [error, setError] = useState("");
   const [page, setPage] = useState(1);
 
-  const MfetchData = useCallback(async (page) => {
-    setLoading(true);
-    try {
-      if (id === "nowplaying") {
+  const MfetchData = useCallback(
+    async (page) => {
+      setLoading(true);
+      try {
+        if (id === "nowplaying") {
           const {
             data: { results: nowplaying },
           } = await Api.movieApi.nowPlaying(page);
           const newResult = movieResult.concat(...nowplaying);
           setMovieResult(newResult);
           setTitle("Now Playing");
-      } else if (id === "popular") {
-        const {
-          data: { results: popular },
-        } = await Api.movieApi.popular(page);
-        const newResult = movieResult.concat(...popular);
-        setMovieResult(newResult);
-        setTitle("Popular");
-      } else if (id === "upcoming") {
-        const {
-          data: { results: upcoming },
-        } = await Api.movieApi.upcoming(page);
-        const newResult = movieResult.concat(...upcoming);
-        setMovieResult(newResult);
-        setTitle("Up Coming");
+        } else if (id === "popular") {
+          const {
+            data: { results: popular },
+          } = await Api.movieApi.popular(page);
+          const newResult = movieResult.concat(...popular);
+          setMovieResult(newResult);
+          setTitle("Popular");
+        } else if (id === "upcoming") {
+          const {
+            data: { results: upcoming },
+          } = await Api.movieApi.upcoming(page);
+          const newResult = movieResult.concat(...upcoming);
+          setMovieResult(newResult);
+          setTitle("Up Coming");
+        }
+      } catch (error) {
+        setError("영화정보를 불러올 수 없습니다.");
       }
-    } catch (error) {
-      setError("영화정보를 불러올 수 없습니다.");
-    }
-    setLoading(false);
-  }, [id, movieResult]);
+      setLoading(false);
+    },
+    [id, movieResult],
+  );
 
   const SfetchData = useCallback(async () => {
     setLoading(true);
@@ -79,12 +82,12 @@ export default withRouter(({ match }) => {
     const clientHeight = document.documentElement.clientHeight;
     console.log(scrollHeight, scrollTop, clientHeight);
     if (scrollTop + clientHeight + 10 >= scrollHeight) {
-      const newpage = page+1;
-      console.log('page',newpage);
+      const newpage = page + 1;
+      console.log("page", newpage);
       setPage(newpage);
-      console.log('page',page);
+      console.log("page", page);
     }
-  },[page]);
+  }, [page]);
 
   useEffect(() => {
     if (url.includes("movies")) {
@@ -97,6 +100,7 @@ export default withRouter(({ match }) => {
     return () => {
       window.removeEventListener("scroll", infiniteScroll);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 
   return (

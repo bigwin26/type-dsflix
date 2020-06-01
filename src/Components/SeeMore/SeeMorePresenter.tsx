@@ -44,14 +44,7 @@ export default React.memo(function HomePresenter({
   loading,
   error,
 }: Ihome) {
-  return loading ? (
-    <>
-      <Helmet>
-        <title>Loading... | DSflix</title>
-      </Helmet>
-      <Loader />
-    </>
-  ) : (
+  return (
     <Container>
       <Helmet>
         <title>Movies | DSflix</title>
@@ -86,6 +79,14 @@ export default React.memo(function HomePresenter({
         </Section>
       )}
       {error && <Message text={error} color={"#e74c3c"} />}
+      {loading && (
+        <>
+          <Helmet>
+            <title>Loading... | DSflix</title>
+          </Helmet>
+          <Loader />
+        </>
+      )}
     </Container>
   );
 });

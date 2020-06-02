@@ -1,28 +1,31 @@
 import React, { useState, useEffect } from "react";
 import SeasonPresenter from "Components/TV/Season/SeasonPresenter";
-import * as Api from "../../../lib/api";
 import { withRouter } from "react-router-dom";
+import { RootState } from "modules";
+import { useSelector, useDispatch } from "react-redux";
+import { getSeason } from "modules/show";
 
-export default withRouter(({match,history,location}) => {
-  const [result, setResult] = useState(null);
-  const [loading, setLoading] = useState(false);
+export default withRouter(({ match }) => {
+  const dispatch = useDispatch();
+  const { season, showError, loading } = useSelector(
+    ({ show, loading }: RootState) => ({
+      season: show.season,
+      showError: show.showError,
+      loading: loading["show/GET_SEASON"],
+    }),
+  );
   const [error, setError] = useState("");
-  const {id,number} = match.params;
-  console.log(match,history,location);
-  useEffect(() => {
-    async function fetchData() {
-      setLoading(true);
-      try {
-        const {data} = await Api.tvApi.season(id,number);
-        setResult( data );
-      } catch (error) {
-          console.log(error);
-        setError("정보를 불러올 수 없습니다.");
-      }
-      setLoading(false);
-    }
-    fetchData();
-  }, [id, number]);
+  const { id, number } = match.params;
 
-    return <SeasonPresenter result={result} loading={loading} error={error}/> 
-})
+  useEffect(() => {
+    dispatch(getSeason(id, number));
+  }, [dispatch, id, number]);
+
+  useEffect(() => {
+    if (showError) {
+      setError("시즌정보를 불러올 수 없습니다.");
+    }
+  }, [showError]);
+
+  return <SeasonPresenter season={season} loading={loading} error={error} />;
+});

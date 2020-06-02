@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import Horizon from "../Common/Horizon";
 import Loader from "../Common/Loader";
@@ -30,8 +31,10 @@ const MainContent = styled.div`
   padding: 50px;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   @media (max-width: 768px) {
     padding: 10px;
+    justify-content: unset;
   }
 `;
 
@@ -41,6 +44,7 @@ const InnerContainer = styled.div`
   @media (max-width: 768px) {
     height: 10%;
   }
+  margin-bottom: 10px;
 `;
 
 const Title = styled.h2`
@@ -58,15 +62,32 @@ const Title = styled.h2`
 `;
 
 const Overview = styled.p`
-  font-size: 18px;
-  opacity: 0.7;
-  position: absolute;
-  z-index: 1;
-  width: 40%;
+  font-size: 16px;
+  opacity: 0.8;
   line-height: 1.6;
   @media (max-width: 768px) {
     font-size: 9px;
   }
+`;
+
+const TitleContainer = styled.div`
+  width: 100%;
+  @media (max-width: 768px) {
+    height: 10%;
+  }
+  margin-bottom: 20px;
+`;
+
+const DetailButton = styled(Link)`
+  display: flex;
+  background-color: rgba(133, 133, 133, 0.6);
+  padding: 0.6rem;
+  border-radius: 0.3rem;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  align-items: center;
+  width: 30%;
 `;
 
 const MainPoster = styled.div<{ bgImg: string }>`
@@ -102,7 +123,7 @@ type Ihome = {
   popular: Array<Movie>;
   upcoming: Array<Movie>;
   mainMovie: Movie | null;
-  loading: Boolean;
+  loading: any;
   error: String;
 };
 
@@ -122,18 +143,35 @@ export default function HomePresenter({
       </Helmet>
       <Loader />
     </>
+  ) : error ? (
+    <Message text={error} color={"red"} />
   ) : (
     <>
       {mainMovie && (
         <MainContainer>
           <MainContent>
-            <InnerContainer>
+            <TitleContainer>
               <Title>{mainMovie.title}</Title>
-            </InnerContainer>
+            </TitleContainer>
+            {mainMovie.overview !== "" && (
+              <InnerContainer>
+                <Overview>
+                  {mainMovie.overview.length > 200
+                    ? `${mainMovie.overview.slice(0, 200)}...`
+                    : mainMovie.overview}
+                </Overview>
+              </InnerContainer>
+            )}
             <InnerContainer>
-              <Overview>{mainMovie.overview}</Overview>
+              <DetailButton to={`/movie/${mainMovie.id}`}>
+                <img
+                  src={require("../../lib/assets/info.svg")}
+                  alt="Info Icon"
+                  style={{ marginRight: "10px" }}
+                />
+                상세 정보
+              </DetailButton>
             </InnerContainer>
-            <InnerContainer></InnerContainer>
           </MainContent>
           <MainPoster
             bgImg={`https://image.tmdb.org/t/p/original${mainMovie.backdrop_path}`}
@@ -200,7 +238,6 @@ export default function HomePresenter({
             ))}
           </Horizon>
         )}
-        {error && <Message text={error} color={"#e74c3c"} />}
       </Container>
     </>
   );

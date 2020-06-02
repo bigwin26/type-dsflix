@@ -1,43 +1,59 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import TVPresenter from "../../Components/TV/TVPresenter";
-import * as Api from "../../lib/api";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "modules";
+import { init } from "modules/show";
 
 export default () => {
-  const [topRated, setTopRated] = useState(null);
-  const [popular, setPopular] = useState(null);
-  const [airingToday, setAiringToday] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  const { topRated, airingToday, popular, showError, loading } = useSelector(
+    ({ show, loading }: RootState) => ({
+      topRated: show.topRated,
+      airingToday: show.airingToday,
+      popular: show.popular,
+      showError: show.showError,
+      loading: loading["show/INIT"],
+    }),
+  );
+  const [mainShow, setMainShow] = useState(null);
   const [error, setError] = useState("");
 
-  useEffect(() => {
-    async function fetchData() {
-      setLoading(true);
-      try {
-        const {
-          data: { results: topRated },
-        } = await Api.tvApi.topRated();
-        setTopRated(topRated);
-        const {
-          data: { results: popular },
-        } = await Api.tvApi.popular();
-        setPopular(popular);
-        const {
-          data: { results: airingToday },
-        } = await Api.tvApi.airingToday();
-        setAiringToday(airingToday);
-      } catch (error) {
-        setError("TV정보를 불러올 수 없습니다.");
-      }
-      setLoading(false);
-    }
-    fetchData();
+  const getRandomNumber = (number: number) => {
+    const random = Math.floor(Math.random() * number);
+    return random;
+  };
+
+  const getMainShow = useCallback((shows) => {
+    const filterdShow = shows.filter(
+      (show: any) => show.backdrop_path !== null,
+    );
+    const number = getRandomNumber(filterdShow.length);
+    const show = filterdShow[number];
+    setMainShow(show);
   }, []);
+
+  useEffect(() => {
+    if ((topRated && airingToday && popular) === null) {
+      dispatch(init());
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (popular !== null) {
+      getMainShow(popular);
+    }
+    if (showError) {
+      setError("프로그램 목록을 불러올 수 없습니다.");
+    }
+  }, [getMainShow, popular, showError]);
 
   return (
     <TVPresenter
       topRated={topRated}
       popular={popular}
       airingToday={airingToday}
+      mainShow={mainShow}
       loading={loading}
       error={error}
     />

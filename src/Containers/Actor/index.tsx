@@ -1,37 +1,39 @@
 import React, { useState, useEffect } from "react";
 import ActorPresenter from "Components/Actor/ActorPresenter";
-import { actorApi } from "../../lib/api";
 import { withRouter } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "modules";
+import { init } from "modules/actor";
 
 export default withRouter(({ match }) => {
   const { id } = match.params;
-  const [result, setResult] = useState(null);
-  const [movies, setMovies] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  const { actor, movies, shows, actorError, loading } = useSelector(
+    ({ actor, loading }: RootState) => ({
+      actor: actor.actor,
+      movies: actor.movies,
+      shows: actor.shows,
+      actorError: actor.actorError,
+      loading: loading["actor/INIT"],
+    }),
+  );
   const [error, setError] = useState("");
 
   useEffect(() => {
-    async function fetchData() {
-      setLoading(true);
-      try {
-        const { data } = await actorApi.actor(id);
-        setResult(data);
-        const {
-          data: { cast },
-        } = await actorApi.movie_credits(id);
-        setMovies(cast);
-      } catch (error) {
-        setError("배우정보를 불러올 수 없습니다.");
-      }
-      setLoading(false);
+    dispatch(init(id));
+  }, [dispatch, id]);
+
+  useEffect(() => {
+    if (actorError) {
+      setError("배우정보를 불러올 수 없습니다.");
     }
-    fetchData();
-  }, [id]);
+  }, [actorError]);
 
   return (
     <ActorPresenter
-      result={result}
+      actor={actor}
       movies={movies}
+      shows={shows}
       loading={loading}
       error={error}
     />

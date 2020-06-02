@@ -1,12 +1,20 @@
 import { combineReducers } from "redux";
-import { all } from "redux-saga/effects";
+import { all, fork } from "redux-saga/effects";
 import detail, { detailSaga } from "./detail";
 import movie, { movieSaga } from "./movie";
+import show, { showSaga } from "./show";
+import actor, { actorSaga } from "./actor";
+import loading from "./loading";
 
-const rootReducer = combineReducers({ detail, movie });
+const rootReducer = combineReducers({ detail, movie, show, actor, loading });
 
 export function* rootSaga() {
-  yield all([movieSaga(), detailSaga()]);
+  yield all([
+    fork(movieSaga),
+    fork(detailSaga),
+    fork(showSaga),
+    fork(actorSaga),
+  ]);
 }
 
 export default rootReducer;

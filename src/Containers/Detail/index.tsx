@@ -2,40 +2,37 @@ import React, { useState, useEffect, useCallback } from "react";
 import DetailPresenter from "../../Components/Detail/DetailPresenter";
 import { withRouter } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getMovieDetail,
-  getShowDetail,
-  getCast,
-  getSimilar,
-  cleanUp,
-} from "modules/detail";
+import { movieDetailInit, showDetailInit, cleanUp } from "modules/detail";
 import { RootState } from "modules";
 
 export default withRouter(({ history, location, match }) => {
   const { id } = match.params;
   const { push } = history;
   const { pathname } = location;
-  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   const dispatch = useDispatch();
-  const { result, cast, similar, error } = useSelector(
-    ({ detail: { result, cast, similar, error } }: RootState) => ({
+  const { result, cast, similar, detailError, loading } = useSelector(
+    ({
+      detail: { result, cast, similar, detailError },
+      loading,
+    }: RootState) => ({
       result,
       cast,
       similar,
-      error,
+      detailError,
+      loading:
+        loading["detail/MOVIE_DETAIL_INIT"] ||
+        loading["detail/SHOW_DETAIL_INIT"],
     }),
   );
 
   const setData = useCallback(
     async (id: number) => {
-      setLoading(true);
       if (pathname.includes("/movie/")) {
-        dispatch(getMovieDetail(id));
-        dispatch(getCast(id));
-        dispatch(getSimilar(id));
+        dispatch(movieDetailInit(id));
       } else if (pathname.includes("/show/")) {
-        dispatch(getShowDetail(id));
+        dispatch(showDetailInit(id));
       }
     },
     [pathname, dispatch],
@@ -46,17 +43,16 @@ export default withRouter(({ history, location, match }) => {
       push("/");
     }
     setData(parseInt(id));
-
     return () => {
       dispatch(cleanUp());
     };
   }, [id, push, setData, dispatch]);
 
   useEffect(() => {
-    if ((result && similar && cast) !== null) {
-      setLoading(false);
+    if (detailError) {
+      setError("정보를 불러올 수 없습니다.");
     }
-  }, [result, similar, cast]);
+  }, [detailError]);
 
   return (
     <DetailPresenter

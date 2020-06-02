@@ -6,16 +6,17 @@ import { init } from "modules/movie";
 
 export default () => {
   const dispatch = useDispatch();
-  const { nowPlaying, popular, upcoming, error } = useSelector(
-    ({ movie }: RootState) => ({
+  const { nowPlaying, popular, upcoming, movieError, loading } = useSelector(
+    ({ movie, loading }: RootState) => ({
       nowPlaying: movie.nowPlaying,
       popular: movie.popular,
       upcoming: movie.upComing,
-      error: movie.error,
+      loading: loading["movie/INIT"],
+      movieError: movie.movieError,
     }),
   );
   const [mainMovie, setMainMovie] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const getRandomNumber = (number: number) => {
     const random = Math.floor(Math.random() * number);
@@ -33,20 +34,19 @@ export default () => {
 
   useEffect(() => {
     if ((nowPlaying && upcoming && popular) === null) {
-      setLoading(true);
       dispatch(init());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
 
   useEffect(() => {
-    if (upcoming !== null) {
-      getMainMovie(upcoming);
+    if (nowPlaying !== null) {
+      getMainMovie(nowPlaying);
     }
-    if (nowPlaying && upcoming && popular !== null) {
-      setLoading(false);
+    if (movieError) {
+      setError("영화목록을 불러올 수 없습니다.");
     }
-  }, [getMainMovie, upcoming, nowPlaying, popular]);
+  }, [getMainMovie, nowPlaying, movieError]);
 
   return (
     <HomePresenter

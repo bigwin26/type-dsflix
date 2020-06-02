@@ -69,7 +69,7 @@ const Cover = styled.div<{ Bgimg: string }>`
 const Data = styled.div`
   width: 70%;
   margin-left: 30px;
-  overflow:auto;
+  overflow: auto;
   @media (max-width: 768px) {
     width: 100%;
     text-align: center;
@@ -93,38 +93,33 @@ const ItemContainer = styled.div`
 `;
 
 const Item = styled.div`
-display:flex;
-    margin-bottom:10px;
-`
+  display: flex;
+  margin-bottom: 10px;
+`;
 const StillContainer = styled.div`
-margin-right:10px;
-`
+  margin-right: 10px;
+`;
 const ContentContainer = styled.div`
-display:flex;
-flex-direction:column;
-`
+  display: flex;
+  flex-direction: column;
+`;
 const ContentTitle = styled.h3`
-font-size:25px;
-margin-bottom:10px;
-`
+  font-size: 25px;
+  margin-bottom: 10px;
+`;
 const ContentAir = styled.div`
-margin-bottom:10px;
-`
+  margin-bottom: 10px;
+`;
 const ContentOverview = styled.p`
-font-size:15px;
-`
+  font-size: 15px;
+`;
 type ISeason = {
-  result: Season | null;
+  season: Season | null;
   error: string | null;
   loading: boolean;
-}
+};
 
-const SeasonPresenter = ({
-  result,
-  error,
-  loading,
-}: ISeason) => {
-    console.log('e',error);
+const SeasonPresenter = ({ season, error, loading }: ISeason) => {
   return loading ? (
     <>
       <Helmet>
@@ -132,40 +127,46 @@ const SeasonPresenter = ({
       </Helmet>
       <Loader />
     </>
+  ) : error ? (
+    <Message text={error} color={"red"} />
   ) : (
-    result && (
+    season && (
       <Container>
         <Helmet>
-          <title>{result.name} | DSflix</title>
+          <title>{season.name} | DSflix</title>
         </Helmet>
         <Backdrop
-          Bgimg={`https://image.tmdb.org/t/p/original${result.poster_path}`}
+          Bgimg={`https://image.tmdb.org/t/p/original${season.poster_path}`}
         />
         <Content>
           <CoverContainer>
             <Cover
               Bgimg={
-                result.poster_path
-                  ? `https://image.tmdb.org/t/p/original${result.poster_path}`
+                season.poster_path
+                  ? `https://image.tmdb.org/t/p/original${season.poster_path}`
                   : require("lib/assets/noPosterSmall.png")
               }
             />
           </CoverContainer>
           <Data>
-            <Title>{result.name}</Title>
-              <ItemContainer>
-                {result.episodes.map(episode=>
-                <Item>
-                    <StillContainer>
-                        <img src={`https://image.tmdb.org/t/p/w300/${episode.still_path}`} alt='still_img'/>
-                    </StillContainer>
-                    <ContentContainer>
+            <Title>{season.name}</Title>
+            <ItemContainer>
+              {season.episodes.map((episode, index) => (
+                <Item key={index}>
+                  <StillContainer>
+                    <img
+                      src={`https://image.tmdb.org/t/p/w300/${episode.still_path}`}
+                      alt="still_img"
+                    />
+                  </StillContainer>
+                  <ContentContainer>
                     <ContentTitle>{`Episode${episode.episode_number} : ${episode.name}`}</ContentTitle>
                     <ContentAir>{episode.air_date}</ContentAir>
                     <ContentOverview>{episode.overview}</ContentOverview>
-                    </ContentContainer>
-                </Item>)}
-              </ItemContainer>
+                  </ContentContainer>
+                </Item>
+              ))}
+            </ItemContainer>
           </Data>
         </Content>
         {error && <Message text={error} color={"#e74c3c"} />}

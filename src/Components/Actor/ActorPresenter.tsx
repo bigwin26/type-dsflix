@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Helmet } from "react-helmet";
 import Loader from "../Common/Loader";
 import Message from "../Common/Message";
-import { Movie, Actor } from "lib/types";
+import { Movie, Actor, TV } from "lib/types";
 import Poster from "Components/Common/Poster";
 import Horizon from "Components/Common/Horizon";
 
@@ -71,7 +71,7 @@ const Cover = styled.div<{ Bgimg: string }>`
 const Data = styled.div`
   width: 70%;
   margin-left: 30px;
-  overflow:auto;
+  overflow: auto;
   @media (max-width: 768px) {
     width: 100%;
     text-align: center;
@@ -89,19 +89,19 @@ const Title = styled.h3`
 `;
 
 const ItemContainer = styled.div`
-  font-size:15px;
+  font-size: 15px;
   width: 85%;
   border-radius: 3px;
   opacity: 0.8;
 `;
 
 const Item = styled.div`
-display:flex;
-    margin-bottom:10px;
-`
+  display: flex;
+  margin-bottom: 10px;
+`;
 
 const Star = styled.div`
-  font-size:15px;
+  font-size: 15px;
   margin-bottom: 10px;
   opacity: 0.8;
 `;
@@ -113,20 +113,14 @@ const EtcContainer = styled.div`
 `;
 
 type IActor = {
-  result: Actor | null;
+  actor: Actor | null;
   movies: Array<Movie> | null;
-  error: string | null;
+  shows: Array<TV> | null;
+  error: string;
   loading: boolean;
-}
+};
 
-const ActorPresenter = ({
-  result,
-  movies,
-  error,
-  loading,
-}: IActor) => {
-    console.log('a',result);
-    console.log('b',movies);
+const ActorPresenter = ({ actor, movies, shows, error, loading }: IActor) => {
   return loading ? (
     <>
       <Helmet>
@@ -134,41 +128,37 @@ const ActorPresenter = ({
       </Helmet>
       <Loader />
     </>
+  ) : error ? (
+    <Message text={error} color={"red"} />
   ) : (
-    result && (
+    actor && (
       <Container>
         <Helmet>
-          <title>{result.name} | DSflix</title>
+          <title>{actor.name} | DSflix</title>
         </Helmet>
         <Backdrop
-          Bgimg={`https://image.tmdb.org/t/p/original${result.profile_path}`}
+          Bgimg={`https://image.tmdb.org/t/p/original${actor.profile_path}`}
         />
         <Content>
           <CoverContainer>
             <Cover
               Bgimg={
-                result.profile_path
-                  ? `https://image.tmdb.org/t/p/original${result.profile_path}`
+                actor.profile_path
+                  ? `https://image.tmdb.org/t/p/original${actor.profile_path}`
                   : require("lib/assets/noPosterSmall.png")
               }
             />
           </CoverContainer>
           <Data>
-          <Title>{result.name}</Title>
+            <Title>{actor.name}</Title>
             <ItemContainer>
-              <Item>
-              Birthday : {result.birthday}
-              </Item>
-              <Item>
-              Place_of_birth : {result.place_of_birth}
-              </Item>
+              <Item>Birthday : {actor.birthday}</Item>
+              <Item>Place_of_birth : {actor.place_of_birth}</Item>
             </ItemContainer>
-            <Star>
-            Popularity ★{result.popularity}
-            </Star>
+            <Star>Popularity ★{actor.popularity}</Star>
             <EtcContainer>
               {movies && movies.length > 0 && (
-                <Horizon title="Appearance">
+                <Horizon title="Movie Appearance">
                   {movies.map((movie) => (
                     <Poster
                       key={movie.id}
@@ -180,13 +170,24 @@ const ActorPresenter = ({
                   ))}
                 </Horizon>
               )}
+              {shows && shows.length > 0 && (
+                <Horizon title="Show Appearance">
+                  {shows.map((show) => (
+                    <Poster
+                      key={show.id}
+                      id={show.id}
+                      imageUrl={show.poster_path}
+                      title={show.name}
+                    />
+                  ))}
+                </Horizon>
+              )}
             </EtcContainer>
           </Data>
         </Content>
-        {error && <Message text={error} color={"#e74c3c"} />}
       </Container>
     )
   );
 };
 
-export default ActorPresenter;
+export default React.memo(ActorPresenter);

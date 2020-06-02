@@ -74,7 +74,7 @@ const Cover = styled.div<{ Bgimg: string }>`
 const Data = styled.div`
   width: 70%;
   margin-left: 30px;
-  overflow:auto;
+  overflow: auto;
   @media (max-width: 768px) {
     width: 100%;
     text-align: center;
@@ -132,6 +132,9 @@ const EtcContainer = styled.div`
   width: 85%;
   border-radius: 3px;
   opacity: 0.8;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 type IDetail = {
@@ -140,7 +143,7 @@ type IDetail = {
   cast: Array<any> | null;
   error: string;
   loading: boolean;
-}
+};
 
 const DetailPresenter = ({
   result,
@@ -157,6 +160,8 @@ const DetailPresenter = ({
       </Helmet>
       <Loader />
     </>
+  ) : error ? (
+    <Message text={error} color={"red"} />
   ) : (
     result && (
       <Container>
@@ -221,17 +226,16 @@ const DetailPresenter = ({
             </Star>
             <Overview>{result.overview}</Overview>
             <EtcContainer>
-              {cast && (
+              {cast && cast.length > 0 && (
                 <Horizon title="CAST">
                   <Cast data={cast} />
                 </Horizon>
               )}
-              {result.videos &&
-                result.videos.results.length > 0 &&(
-                  <Horizon title="TRAILER">
-                    <Youtube data={result.videos.results} />
-                  </Horizon>
-                )}
+              {result.videos && result.videos.results.length > 0 && (
+                <Horizon title="TRAILER">
+                  <Youtube data={result.videos.results} />
+                </Horizon>
+              )}
               {similar && similar.length > 0 && (
                 <Horizon title="SIMILAR">
                   {similar.map((movie) => (
@@ -239,7 +243,7 @@ const DetailPresenter = ({
                       key={movie.id}
                       id={movie.id}
                       imageUrl={movie.poster_path}
-                      title={movie.title}
+                      title={movie.title ? movie.title : movie.name}
                       isMovie={true}
                     />
                   ))}
@@ -260,13 +264,12 @@ const DetailPresenter = ({
                 </Horizon>
               )}
               {result.production_companies &&
-              result.production_companies.length > 0 && (
-                <Logo data={result.production_companies} group="logo" />
-              )}
+                result.production_companies.length > 0 && (
+                  <Logo data={result.production_companies} group="logo" />
+                )}
             </EtcContainer>
           </Data>
         </Content>
-        {error && <Message text={error} color={"#e74c3c"} />}
       </Container>
     )
   );

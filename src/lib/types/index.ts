@@ -48,6 +48,8 @@ export type TV = {
   name: string;
   vote_average?: number;
   first_air_date: string;
+  overview: string;
+  backdrop_path: string;
 };
 
 export type Episode = {

@@ -88,6 +88,10 @@ const DetailButton = styled(Link)`
   @media (max-width: 768px) {
     font-size: 10px;
     width: 80%;
+    img {
+      width: 14px;
+      height: 14px;
+    }
   }
 `;
 

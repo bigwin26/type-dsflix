@@ -1,6 +1,9 @@
 import axios from "axios";
 
-const language = localStorage.getItem("language");
+let language = localStorage.getItem("language");
+if (!language) {
+  language = "ko";
+}
 
 const api = axios.create({
   baseURL: "https://api.themoviedb.org/3/",

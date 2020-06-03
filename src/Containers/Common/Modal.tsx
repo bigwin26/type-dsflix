@@ -29,7 +29,9 @@ export default () => {
       setLanguage(language);
     }
     return () => {
-      location.reload();
+      if (language !== localStorage.getItem("language")) {
+        location.reload();
+      }
     };
   }, []);
 

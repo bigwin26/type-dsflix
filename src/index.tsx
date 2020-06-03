@@ -20,8 +20,9 @@ sagaMiddleware.run(rootSaga);
 const setLanguage = () => {
   try {
     const language = localStorage.getItem("language");
-    if (!language) localStorage.setItem("language", "ko");
-    else {
+    if (!language) {
+      localStorage.setItem("language", "ko");
+    } else {
       store.dispatch(languageCheck(language));
     }
   } catch (error) {

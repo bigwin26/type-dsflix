@@ -34,6 +34,7 @@ const MainContent = styled.div`
   justify-content: space-between;
   @media (max-width: 768px) {
     padding: 10px;
+    justify-content: unset;
   }
 `;
 
@@ -41,7 +42,7 @@ const InnerContainer = styled.div`
   width: 100%;
   height: 30%;
   @media (max-width: 768px) {
-    height: 10%;
+    overflow: hidden;
   }
   margin-bottom: 10px;
 `;
@@ -71,9 +72,6 @@ const Overview = styled.p`
 
 const TitleContainer = styled.div`
   width: 100%;
-  @media (max-width: 768px) {
-    height: 10%;
-  }
   margin-bottom: 20px;
 `;
 
@@ -87,6 +85,10 @@ const DetailButton = styled(Link)`
   font-size: 1rem;
   align-items: center;
   width: 30%;
+  @media (max-width: 768px) {
+    font-size: 10px;
+    width: 80%;
+  }
 `;
 
 const MainPoster = styled.div<{ bgImg: string }>`

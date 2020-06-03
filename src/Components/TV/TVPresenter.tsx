@@ -136,7 +136,6 @@ const TVPresenter = ({
   loading,
   error,
 }: ITV) => {
-  console.log(popular);
   return loading ? (
     <>
       <Helmet>

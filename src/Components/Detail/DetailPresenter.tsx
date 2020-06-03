@@ -153,7 +153,6 @@ const DetailPresenter = ({
   error,
   loading,
 }: IDetail) => {
-  console.log(result);
   return loading ? (
     <>
       <Helmet>

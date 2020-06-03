@@ -3,6 +3,7 @@ import TVPresenter from "../../Components/TV/TVPresenter";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "modules";
 import { init } from "modules/show";
+import { languageCheck } from "modules/modal";
 
 export default () => {
   const dispatch = useDispatch();
@@ -33,6 +34,9 @@ export default () => {
   }, []);
 
   useEffect(() => {
+    const language = localStorage.getItem("language");
+    if (!language) return;
+    dispatch(languageCheck(language));
     if ((topRated && airingToday && popular) === null) {
       dispatch(init());
     }

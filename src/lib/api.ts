@@ -1,8 +1,10 @@
 import axios from "axios";
 
+const language = localStorage.getItem("language");
+
 const api = axios.create({
   baseURL: "https://api.themoviedb.org/3/",
-  params: { api_key: "248a52d680518fd97f6e7be12c21157d", language: "ko" },
+  params: { api_key: "248a52d680518fd97f6e7be12c21157d", language },
 });
 
 //language: "en-US"

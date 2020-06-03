@@ -3,6 +3,7 @@ import HomePresenter from "../../Components/Home/HomePresenter";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "modules";
 import { init } from "modules/movie";
+import { languageCheck } from "modules/modal";
 
 export default () => {
   const dispatch = useDispatch();
@@ -33,6 +34,9 @@ export default () => {
   }, []);
 
   useEffect(() => {
+    const language = localStorage.getItem("language");
+    if (!language) return;
+    dispatch(languageCheck(language));
     if ((nowPlaying && upcoming && popular) === null) {
       dispatch(init());
     }

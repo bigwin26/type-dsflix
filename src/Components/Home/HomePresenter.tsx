@@ -136,7 +136,6 @@ export default React.memo(function HomePresenter({
   loading,
   error,
 }: Ihome) {
-  console.log(mainMovie);
   return loading ? (
     <>
       <Helmet>

@@ -1,6 +1,8 @@
 import React from "react";
-import { Link, withRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
+import ModalPortal from "ModalPortal";
+import Modal from "Containers/Common/Modal";
 
 const Header = styled.header`
   color: white;
@@ -10,6 +12,7 @@ const Header = styled.header`
   width: 100%;
   height: 50px;
   display: flex;
+  justify-content: space-between;
   align-items: center;
   padding: 0px 10px;
   /*background-color: rgba(20, 20, 20, 0.6);*/
@@ -38,20 +41,35 @@ const StyledLink = styled(Link)`
   justify-content: center;
 `;
 
-export default React.memo(
-  withRouter(({ location: { pathname } }) => (
-    <Header>
-      <List>
-        <Item current={pathname === "/"}>
-          <StyledLink to="/">Home</StyledLink>
-        </Item>
-        <Item current={pathname === "/show"}>
-          <StyledLink to="/show">TV</StyledLink>
-        </Item>
-        <Item current={pathname === "/search"}>
-          <StyledLink to="/search">Search</StyledLink>
-        </Item>
-      </List>
-    </Header>
-  )),
-);
+const LanguageContainer = styled.div`
+  margin-right: 10px;
+  cursor: pointer;
+`;
+
+type IHeader = {
+  pathname: string;
+  onClick: () => void;
+  modalState: boolean;
+};
+
+export default React.memo(({ pathname, onClick, modalState }: IHeader) => (
+  <Header>
+    <List>
+      <Item current={pathname === "/"}>
+        <StyledLink to="/">Home</StyledLink>
+      </Item>
+      <Item current={pathname === "/show"}>
+        <StyledLink to="/show">TV</StyledLink>
+      </Item>
+      <Item current={pathname === "/search"}>
+        <StyledLink to="/search">Search</StyledLink>
+      </Item>
+    </List>
+    <LanguageContainer onClick={onClick}>Language</LanguageContainer>
+    {modalState && (
+      <ModalPortal>
+        <Modal />
+      </ModalPortal>
+    )}
+  </Header>
+));

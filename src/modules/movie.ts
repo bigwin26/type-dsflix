@@ -18,8 +18,13 @@ const [GET_UPCOMING, GET_UPCOMING_SUCCESS] = createRequestActionTypes(
   "movie/GET_UPCOMING" as const,
 );
 
+const CLEAN_UP = "movie/CLEAN_UP" as const;
+
 export const init = () => ({
   type: INIT,
+});
+export const cleanUp = () => ({
+  type: CLEAN_UP,
 });
 
 const initSaga = createInitRequestSaga(
@@ -62,6 +67,8 @@ function movie(state: MovieState = initialState, action: MovieAction) {
       return { ...state, upComing: action.payload.results };
     case INIT_FAILURE:
       return { ...state, movieError: action.error };
+    case CLEAN_UP:
+      return initialState;
     default:
       return state;
   }

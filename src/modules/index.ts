@@ -5,8 +5,16 @@ import movie, { movieSaga } from "./movie";
 import show, { showSaga } from "./show";
 import actor, { actorSaga } from "./actor";
 import loading from "./loading";
+import modal, { modalSaga } from "./modal";
 
-const rootReducer = combineReducers({ detail, movie, show, actor, loading });
+const rootReducer = combineReducers({
+  detail,
+  movie,
+  show,
+  actor,
+  loading,
+  modal,
+});
 
 export function* rootSaga() {
   yield all([
@@ -14,6 +22,7 @@ export function* rootSaga() {
     fork(detailSaga),
     fork(showSaga),
     fork(actorSaga),
+    fork(modalSaga),
   ]);
 }
 

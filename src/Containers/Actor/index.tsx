@@ -4,6 +4,7 @@ import { withRouter } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "modules";
 import { init } from "modules/actor";
+import { languageCheck } from "modules/modal";
 
 export default withRouter(({ match }) => {
   const { id } = match.params;
@@ -20,6 +21,9 @@ export default withRouter(({ match }) => {
   const [error, setError] = useState("");
 
   useEffect(() => {
+    const language = localStorage.getItem("language");
+    if (!language) return;
+    dispatch(languageCheck(language));
     dispatch(init(id));
   }, [dispatch, id]);
 

@@ -17,12 +17,22 @@ describe("data Test", () => {
     console.log(test4);
     console.log(data.length);
   }); */
-  it("get season", async () => {
+  /*   it("get season", async () => {
     const {
       data: { episodes },
     } = await tvApi.season(85937, 1);
     console.log(episodes);
     const random = Math.floor(Math.random() * episodes.length);
     console.log(random);
+  }); */
+  it("get language", async () => {
+    let language = "ll";
+    if (language === ("ko" || "en-US")) {
+      console.log("lang", language);
+      language = "true";
+    } else {
+      language = "false";
+    }
+    console.log("condition", language);
   });
 });

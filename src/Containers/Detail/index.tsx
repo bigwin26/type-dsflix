@@ -4,6 +4,7 @@ import { withRouter } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { movieDetailInit, showDetailInit, cleanUp } from "modules/detail";
 import { RootState } from "modules";
+import { languageCheck } from "modules/modal";
 
 export default withRouter(({ history, location, match }) => {
   const { id } = match.params;
@@ -39,6 +40,9 @@ export default withRouter(({ history, location, match }) => {
   );
 
   useEffect(() => {
+    const language = localStorage.getItem("language");
+    if (!language) return;
+    dispatch(languageCheck(language));
     if (isNaN(parseInt(id))) {
       push("/");
     }

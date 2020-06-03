@@ -4,6 +4,7 @@ import { withRouter } from "react-router-dom";
 import { RootState } from "modules";
 import { useSelector, useDispatch } from "react-redux";
 import { getSeason } from "modules/show";
+import { languageCheck } from "modules/modal";
 
 export default withRouter(({ match }) => {
   const dispatch = useDispatch();
@@ -18,6 +19,9 @@ export default withRouter(({ match }) => {
   const { id, number } = match.params;
 
   useEffect(() => {
+    const language = localStorage.getItem("language");
+    if (!language) return;
+    dispatch(languageCheck(language));
     dispatch(getSeason(id, number));
   }, [dispatch, id, number]);
 

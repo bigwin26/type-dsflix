@@ -44,4 +44,4 @@ const Section = ({ title, children }: ISection) => {
   );
 };
 
-export default Section;
+export default React.memo(Section);

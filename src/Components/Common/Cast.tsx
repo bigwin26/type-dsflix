@@ -74,11 +74,15 @@ const Cast = ({ data }: ICast) => {
               />
             </ImageContainer>
             <Name>{actor.name}</Name>
-            <Character>{actor.character.length > 20 ? `${actor.character.slice(0,20)}...`: actor.character}</Character>
+            <Character>
+              {actor.character.length > 20
+                ? `${actor.character.slice(0, 20)}...`
+                : actor.character}
+            </Character>
           </StyledLink>
         ))}
     </Container>
   );
 };
 
-export default Cast;
+export default React.memo(Cast);

@@ -23,4 +23,4 @@ const Youtube = ({ data }: IYoutube) => {
   );
 };
 
-export default Youtube;
+export default React.memo(Youtube);

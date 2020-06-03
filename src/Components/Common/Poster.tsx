@@ -62,13 +62,29 @@ interface IPoster {
   rating?: number;
   year?: string;
   isMovie?: boolean;
-  hasSub?:boolean;
-  sub_id?:number;
+  hasSub?: boolean;
+  sub_id?: number;
 }
 
-const Poster = ({ id, imageUrl, title, year, isMovie = false, hasSub = false , sub_id }: IPoster) => {
+const Poster = ({
+  id,
+  imageUrl,
+  title,
+  year,
+  isMovie = false,
+  hasSub = false,
+  sub_id,
+}: IPoster) => {
   return (
-    <StyledLink to={hasSub?`/show/${id}/season/${sub_id}`: isMovie?`/movie/${id}`:`/show/${id}`}>
+    <StyledLink
+      to={
+        hasSub
+          ? `/show/${id}/season/${sub_id}`
+          : isMovie
+          ? `/movie/${id}`
+          : `/show/${id}`
+      }
+    >
       <Container>
         <ImageContainer>
           <Image
@@ -88,4 +104,4 @@ const Poster = ({ id, imageUrl, title, year, isMovie = false, hasSub = false , s
   );
 };
 
-export default Poster;
+export default React.memo(Poster);

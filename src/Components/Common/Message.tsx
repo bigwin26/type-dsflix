@@ -24,4 +24,4 @@ const Message = ({ text, color }: IMessage) => {
   );
 };
 
-export default Message;
+export default React.memo(Message);

@@ -236,4 +236,4 @@ const TVPresenter = ({
   );
 };
 
-export default TVPresenter;
+export default React.memo(TVPresenter);

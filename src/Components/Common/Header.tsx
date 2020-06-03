@@ -38,18 +38,20 @@ const StyledLink = styled(Link)`
   justify-content: center;
 `;
 
-export default withRouter(({ location: { pathname } }) => (
-  <Header>
-    <List>
-      <Item current={pathname === "/"}>
-        <StyledLink to="/">Home</StyledLink>
-      </Item>
-      <Item current={pathname === "/show"}>
-        <StyledLink to="/show">TV</StyledLink>
-      </Item>
-      <Item current={pathname === "/search"}>
-        <StyledLink to="/search">Search</StyledLink>
-      </Item>
-    </List>
-  </Header>
-));
+export default React.memo(
+  withRouter(({ location: { pathname } }) => (
+    <Header>
+      <List>
+        <Item current={pathname === "/"}>
+          <StyledLink to="/">Home</StyledLink>
+        </Item>
+        <Item current={pathname === "/show"}>
+          <StyledLink to="/show">TV</StyledLink>
+        </Item>
+        <Item current={pathname === "/search"}>
+          <StyledLink to="/search">Search</StyledLink>
+        </Item>
+      </List>
+    </Header>
+  )),
+);

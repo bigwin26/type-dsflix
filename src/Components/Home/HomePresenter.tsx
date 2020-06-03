@@ -127,7 +127,7 @@ type Ihome = {
   error: String;
 };
 
-export default function HomePresenter({
+export default React.memo(function HomePresenter({
   nowPlaying,
   popular,
   upcoming,
@@ -241,4 +241,4 @@ export default function HomePresenter({
       </Container>
     </>
   );
-}
+});

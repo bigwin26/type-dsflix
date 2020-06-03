@@ -21,4 +21,4 @@ const Responsive = ({ children, ...rest }: IResponsive) => {
   return <ResponsiveBlock {...rest}>{children}</ResponsiveBlock>;
 };
 
-export default Responsive;
+export default React.memo(Responsive);

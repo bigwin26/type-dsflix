@@ -155,7 +155,11 @@ const SeasonPresenter = ({ season, error, loading }: ISeason) => {
                 <Item key={index}>
                   <StillContainer>
                     <img
-                      src={`https://image.tmdb.org/t/p/w300/${episode.still_path}`}
+                      src={
+                        episode.still_path
+                          ? `https://image.tmdb.org/t/p/w300/${episode.still_path}`
+                          : require("../../../lib/assets/noPosterSmall.png")
+                      }
                       alt="still_img"
                     />
                   </StillContainer>
@@ -175,4 +179,4 @@ const SeasonPresenter = ({ season, error, loading }: ISeason) => {
   );
 };
 
-export default SeasonPresenter;
+export default React.memo(SeasonPresenter);

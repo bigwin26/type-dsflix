@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import {Helmet} from "react-helmet";
+import { Helmet } from "react-helmet";
 import Section from "../Common/Section";
 import Loader from "../Common/Loader";
 import Message from "../Common/Message";
@@ -25,14 +25,14 @@ const Input = styled.input`
   width: 100%;
 `;
 
-interface ISearch{
-  movieResults:Array<Movie> | null,
-  tvResults:Array<TV> | null,
-  loading:boolean,
-  error:string,
-  handleSubmit:(event: React.FormEvent<HTMLFormElement>)=>void,
-  searchTerm:string,
-  updateTerm:(event: React.ChangeEvent<HTMLInputElement>)=>void,
+interface ISearch {
+  movieResults: Array<Movie> | null;
+  tvResults: Array<TV> | null;
+  loading: boolean;
+  error: string;
+  handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+  searchTerm: string;
+  updateTerm: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const SearchPresenter = ({
@@ -43,7 +43,7 @@ const SearchPresenter = ({
   handleSubmit,
   searchTerm,
   updateTerm,
-}:ISearch) => {
+}: ISearch) => {
   return (
     <Container>
       <Helmet>
@@ -104,4 +104,4 @@ const SearchPresenter = ({
   );
 };
 
-export default SearchPresenter;
+export default React.memo(SearchPresenter);

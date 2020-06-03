@@ -275,4 +275,4 @@ const DetailPresenter = ({
   );
 };
 
-export default DetailPresenter;
+export default React.memo(DetailPresenter);

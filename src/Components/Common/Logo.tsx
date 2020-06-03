@@ -47,7 +47,13 @@ const Logo = ({ data }: ILogo) => {
         {data && data.length > 1 ? (
           data.map((img, index) => (
             <Item key={index}>
-              <Image src={img.logo_path? `https://image.tmdb.org/t/p/w300${img.logo_path}`: require("../../lib/assets/film-icon.png")} />
+              <Image
+                src={
+                  img.logo_path
+                    ? `https://image.tmdb.org/t/p/w300${img.logo_path}`
+                    : require("../../lib/assets/film-icon.png")
+                }
+              />
               {img.name}
             </Item>
           ))
@@ -59,4 +65,4 @@ const Logo = ({ data }: ILogo) => {
   );
 };
 
-export default Logo;
+export default React.memo(Logo);

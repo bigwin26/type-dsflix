@@ -93,6 +93,9 @@ const ItemContainer = styled.div`
   width: 85%;
   border-radius: 3px;
   opacity: 0.8;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 const Item = styled.div`
@@ -100,16 +103,13 @@ const Item = styled.div`
   margin-bottom: 10px;
 `;
 
-const Star = styled.div`
-  font-size: 15px;
-  margin-bottom: 10px;
-  opacity: 0.8;
-`;
-
 const EtcContainer = styled.div`
   width: 85%;
   border-radius: 3px;
   opacity: 0.8;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 type IActor = {
@@ -152,10 +152,12 @@ const ActorPresenter = ({ actor, movies, shows, error, loading }: IActor) => {
           <Data>
             <Title>{actor.name}</Title>
             <ItemContainer>
-              <Item>Birthday : {actor.birthday}</Item>
-              <Item>Place_of_birth : {actor.place_of_birth}</Item>
+              {actor.birthday && <Item>Birthday : {actor.birthday}</Item>}
+              {actor.place_of_birth && (
+                <Item>Place_of_birth : {actor.place_of_birth}</Item>
+              )}
+              <Item>Popularity ★{actor.popularity}</Item>
             </ItemContainer>
-            <Star>Popularity ★{actor.popularity}</Star>
             <EtcContainer>
               {movies && movies.length > 0 && (
                 <Horizon title="Movie Appearance">

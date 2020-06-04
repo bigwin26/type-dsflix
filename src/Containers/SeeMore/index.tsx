@@ -50,33 +50,39 @@ export default withRouter(({ match }) => {
     [id, movieResult],
   );
 
-  const SfetchData = useCallback(async () => {
-    setLoading(true);
-    try {
-      if (id === "topRated") {
-        const {
-          data: { results: toprated },
-        } = await Api.tvApi.topRated();
-        setShowResult(toprated);
-        setTitle("Top Rated");
-      } else if (id === "airingToday") {
-        const {
-          data: { results: airingtoday },
-        } = await Api.tvApi.airingToday();
-        setShowResult(airingtoday);
-        setTitle("Airing Today");
-      } else if (id === "popular") {
-        const {
-          data: { results: popular },
-        } = await Api.tvApi.popular();
-        setShowResult(popular);
-        setTitle("Popular");
+  const SfetchData = useCallback(
+    async (page) => {
+      setLoading(true);
+      try {
+        if (id === "topRated") {
+          const {
+            data: { results: toprated },
+          } = await Api.tvApi.topRated(page);
+          const newResult = showResult.concat(...toprated);
+          setShowResult(newResult);
+          setTitle("Top Rated");
+        } else if (id === "airingToday") {
+          const {
+            data: { results: airingtoday },
+          } = await Api.tvApi.airingToday(page);
+          const newResult = showResult.concat(...airingtoday);
+          setShowResult(newResult);
+          setTitle("Airing Today");
+        } else if (id === "popular") {
+          const {
+            data: { results: popular },
+          } = await Api.tvApi.popular(page);
+          const newResult = showResult.concat(...popular);
+          setShowResult(newResult);
+          setTitle("Popular");
+        }
+      } catch (error) {
+        setError("영화정보를 불러올 수 없습니다.");
       }
-    } catch (error) {
-      setError("영화정보를 불러올 수 없습니다.");
-    }
-    setLoading(false);
-  }, [id]);
+      setLoading(false);
+    },
+    [id, showResult],
+  );
 
   const infiniteScroll = useCallback(() => {
     const scrollHeight = document.documentElement.scrollHeight;
@@ -97,7 +103,7 @@ export default withRouter(({ match }) => {
       MfetchData(page);
     }
     if (url.includes("shows")) {
-      SfetchData();
+      SfetchData(page);
     }
     window.addEventListener("scroll", infiniteScroll);
     return () => {

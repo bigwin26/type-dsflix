@@ -31,8 +31,6 @@ const [GET_SHOW_SIMILAR, GET_SHOW_SIMILAR_SUCCESS] = createRequestActionTypes(
   "detail/GET_SHOW_SIMILAR" as const,
 );
 
-const CLEAN_UP = "detail/CLEAN_UP" as const;
-
 export const movieDetailInit = (id: number) => ({
   type: MOVIE_DETAIL_INIT,
   payload: id,
@@ -40,9 +38,6 @@ export const movieDetailInit = (id: number) => ({
 export const showDetailInit = (id: number) => ({
   type: SHOW_DETAIL_INIT,
   payload: id,
-});
-export const cleanUp = () => ({
-  type: CLEAN_UP,
 });
 
 const movieDetailSaga = createInitRequestSaga(
@@ -103,8 +98,6 @@ function detail(state: DetailState = initialState, action: DetailAction) {
       return { ...state, detailError: action.error };
     case SHOW_DETAIL_INIT_FAILURE:
       return { ...state, detailError: action.error };
-    case CLEAN_UP:
-      return initialState;
     default:
       return state;
   }

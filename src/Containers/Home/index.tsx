@@ -17,6 +17,7 @@ export default () => {
     }),
   );
   const [mainMovie, setMainMovie] = useState(null);
+  const [language, setLanguage] = useState("");
   const [error, setError] = useState("");
 
   const getRandomNumber = (number: number) => {
@@ -36,6 +37,7 @@ export default () => {
   useEffect(() => {
     const language = localStorage.getItem("language");
     if (!language) return;
+    setLanguage(language);
     dispatch(languageCheck(language));
     if ((nowPlaying && upcoming && popular) === null) {
       dispatch(init());
@@ -60,6 +62,7 @@ export default () => {
       mainMovie={mainMovie}
       loading={loading}
       error={error}
+      language={language}
     />
   );
 };

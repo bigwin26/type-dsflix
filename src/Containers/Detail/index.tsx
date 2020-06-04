@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import DetailPresenter from "../../Components/Detail/DetailPresenter";
 import { withRouter } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { movieDetailInit, showDetailInit, cleanUp } from "modules/detail";
+import { movieDetailInit, showDetailInit } from "modules/detail";
 import { RootState } from "modules";
 import { languageCheck } from "modules/modal";
 
@@ -47,9 +47,6 @@ export default withRouter(({ history, location, match }) => {
       push("/");
     }
     setData(parseInt(id));
-    return () => {
-      dispatch(cleanUp());
-    };
   }, [id, push, setData, dispatch]);
 
   useEffect(() => {

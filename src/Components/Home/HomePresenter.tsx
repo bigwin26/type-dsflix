@@ -35,6 +35,7 @@ const MainContent = styled.div`
   @media (max-width: 768px) {
     padding: 10px;
     justify-content: unset;
+    height: calc(100vh - 400px);
   }
 `;
 
@@ -129,7 +130,8 @@ type Ihome = {
   upcoming: Array<Movie>;
   mainMovie: Movie | null;
   loading: any;
-  error: String;
+  error: string;
+  language: string;
 };
 
 export default React.memo(function HomePresenter({
@@ -139,6 +141,7 @@ export default React.memo(function HomePresenter({
   mainMovie,
   loading,
   error,
+  language,
 }: Ihome) {
   return loading ? (
     <>
@@ -160,8 +163,8 @@ export default React.memo(function HomePresenter({
             {mainMovie.overview !== "" && (
               <InnerContainer>
                 <Overview>
-                  {mainMovie.overview.length > 200
-                    ? `${mainMovie.overview.slice(0, 200)}...`
+                  {mainMovie.overview.length > 180
+                    ? `${mainMovie.overview.slice(0, 180)}...`
                     : mainMovie.overview}
                 </Overview>
               </InnerContainer>
@@ -173,7 +176,7 @@ export default React.memo(function HomePresenter({
                   alt="Info Icon"
                   style={{ marginRight: "10px" }}
                 />
-                상세 정보
+                {language === "ko" ? "상세 정보" : "Info"}
               </DetailButton>
             </InnerContainer>
           </MainContent>
@@ -184,15 +187,6 @@ export default React.memo(function HomePresenter({
           </MainPoster>
         </MainContainer>
       )}
-      {/*       <iframe
-        width="100%"
-        height="677"
-        src="https://www.youtube.com/embed/yhXT3hBaDoU?autoplay=1"
-        frameBorder="0"
-        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-        allowFullScreen
-        title="깡"
-      ></iframe> */}
       <Container>
         <Helmet>
           <title>Movies | DSflix</title>

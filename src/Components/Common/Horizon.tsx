@@ -14,7 +14,13 @@ const Title = styled.h2`
 `;
 
 const StyledLink = styled(Link)`
-  background-color: black;
+  background-color: rgba(133, 133, 133, 0.6);
+  border: 1px solid;
+  border-radius: 5px;
+  padding: 2px;
+  &:hover {
+    background-color: grey;
+  }
 `;
 
 const HorizonContainer = styled.div`
@@ -78,6 +84,7 @@ interface IHorizon {
 }
 
 export default React.memo(({ children, path, title }: IHorizon) => {
+  const language = localStorage.getItem("language");
   const card = useRef<HTMLDivElement>(null);
   const scroll = (e: React.MouseEvent) => {
     if (!card.current) {
@@ -92,7 +99,11 @@ export default React.memo(({ children, path, title }: IHorizon) => {
   return (
     <Container>
       {title && <Title>{title}</Title>}
-      {path && <StyledLink to={path}>더보기</StyledLink>}
+      {path && (
+        <StyledLink to={path}>
+          {language === "ko" ? `더보기` : `SeeMore`}
+        </StyledLink>
+      )}
       <ArrowContainer>
         <HorizonContainer ref={card}>{children}</HorizonContainer>
         <ArrowButtonBlock direction="left">

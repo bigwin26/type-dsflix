@@ -35,6 +35,7 @@ const MainContent = styled.div`
   @media (max-width: 768px) {
     padding: 10px;
     justify-content: unset;
+    height: calc(100vh - 400px);
   }
 `;
 
@@ -160,8 +161,8 @@ const TVPresenter = ({
             {mainShow.overview !== "" && (
               <InnerContainer>
                 <Overview>
-                  {mainShow.overview.length > 200
-                    ? `${mainShow.overview.slice(0, 200)}...`
+                  {mainShow.overview.length > 180
+                    ? `${mainShow.overview.slice(0, 180)}...`
                     : mainShow.overview}
                 </Overview>
               </InnerContainer>

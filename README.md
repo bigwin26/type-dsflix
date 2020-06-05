@@ -1,3 +1,24 @@
+<h1 align="center">Welcome to DSFlix 👋</h1>
+<p>
+  <img alt="Version" src="https://img.shields.io/badge/version-0.1.0-blue.svg?cacheSeconds=2592000" />
+</p>
+
+> DS flix 영화, TV프로그램 정보 사이트 with TypeScript
+
+### 🏠 [Homepage](https://eager-allen-ef19d9.netlify.app/)
+
+## Install
+
+```sh
+npm install
+```
+
+## Usage
+
+```sh
+npm run start
+```
+
 # DS flix React 작업 완료 이후 타입스크립트 적용 + 추가작업
 
 - TS적용 전 초기버전 https://github.com/bigwin26/dsflix
@@ -7,7 +28,7 @@
 - [x] 디테일 페이지 구성 변경
 - [x] 디테일 페이지 별점 추가
 - [x] 더보기 페이지 무한 스크롤
-- [x] 가로 스크롤바 제거 후 클릭이벤트 적용
+- [x] 가로 스크롤바 제거 후 화살표 클릭이벤트 적용
 - [x] 메인화면 예고편 적용
 - [x] TV SHOW 디테일 페이지 바로보기 연결 적용
 - [x] 다국어 적용(React Portal사용)
@@ -19,3 +40,17 @@
 - [x] HashRouter 사용시 LINK를통해 동일한 path로 이동하려고하면 에러발생. ex) /movie/1 -> /movie/2
   - 해결: 리덕스 상태관리를 통해 해결.
 - [x] 더보기 작업시 중복데이터 필터링 적용
+
+## Author
+
+👤 **daeseung**
+
+- Github: [@bigwin26](https://github.com/bigwin26)
+
+## Show your support
+
+Give a ⭐️ if this project helped you!
+
+---
+
+_This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_

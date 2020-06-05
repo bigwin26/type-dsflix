@@ -132,6 +132,7 @@ interface ITV {
   mainShow: TV | null;
   loading: boolean;
   error: string;
+  language: string;
 }
 
 const TVPresenter = ({
@@ -141,6 +142,7 @@ const TVPresenter = ({
   mainShow,
   loading,
   error,
+  language,
 }: ITV) => {
   return loading ? (
     <>
@@ -175,7 +177,7 @@ const TVPresenter = ({
                   alt="Info Icon"
                   style={{ marginRight: "10px" }}
                 />
-                상세 정보
+                {language === "ko" ? "상세 정보" : "Info"}
               </DetailButton>
             </InnerContainer>
           </MainContent>

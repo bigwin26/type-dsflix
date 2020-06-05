@@ -17,6 +17,7 @@ export default () => {
     }),
   );
   const [mainShow, setMainShow] = useState(null);
+  const [language, setLanguage] = useState("");
   const [error, setError] = useState("");
 
   const getRandomNumber = (number: number) => {
@@ -36,6 +37,7 @@ export default () => {
   useEffect(() => {
     const language = localStorage.getItem("language");
     if (!language) return;
+    setLanguage(language);
     dispatch(languageCheck(language));
     if ((topRated && airingToday && popular) === null) {
       dispatch(init());
@@ -60,6 +62,7 @@ export default () => {
       mainShow={mainShow}
       loading={loading}
       error={error}
+      language={language}
     />
   );
 };

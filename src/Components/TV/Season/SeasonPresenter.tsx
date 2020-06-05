@@ -90,28 +90,51 @@ const ItemContainer = styled.div`
   width: 85%;
   border-radius: 3px;
   opacity: 0.8;
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 0px 10px;
+  }
 `;
 
 const Item = styled.div`
   display: flex;
-  margin-bottom: 10px;
+  padding: 10px 0px;
+  border-bottom: 1px solid grey;
 `;
 const StillContainer = styled.div`
   margin-right: 10px;
+  img {
+    @media (max-width: 768px) {
+      width: 150px;
+    }
+  }
 `;
 const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
+  @media (max-width: 768px) {
+    text-align: left;
+  }
 `;
 const ContentTitle = styled.h3`
   font-size: 25px;
   margin-bottom: 10px;
+  color: #38ada9;
+  @media (max-width: 768px) {
+    font-size: 15px;
+  }
 `;
 const ContentAir = styled.div`
+  color: #60a3bc;
   margin-bottom: 10px;
 `;
 const ContentOverview = styled.p`
-  font-size: 15px;
+  font-size: 13px;
+  line-height: 1.5;
+  @media (max-width: 768px) {
+    font-size: 10px;
+    text-align: justify;
+  }
 `;
 type ISeason = {
   season: Season | null;

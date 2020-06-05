@@ -44,6 +44,7 @@ const InnerContainer = styled.div`
   height: 30%;
   @media (max-width: 768px) {
     overflow: hidden;
+    height: auto;
   }
   margin-bottom: 10px;
 `;

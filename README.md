@@ -6,7 +6,7 @@
 > DS flix 영화, TV프로그램 정보 사이트 with TypeScript
 
 ### 🏠 [Homepage](https://eager-allen-ef19d9.netlify.app/)
-
+-클릭시 홈페이지로 이동합니다.
 ## Install
 
 ```sh
@@ -23,7 +23,7 @@ npm run start
 
 - TS적용 전 초기버전 https://github.com/bigwin26/dsflix
 
-# DS's Blog FrontEnd with REACT , TS
+# DS's FrontEnd with REACT , TS
 
 - [x] 디테일 페이지 구성 변경
 - [x] 디테일 페이지 별점 추가

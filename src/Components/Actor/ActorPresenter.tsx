@@ -77,6 +77,7 @@ const Data = styled.div`
     text-align: center;
     margin-left: 0px;
     height: calc(100vh - 300px);
+    overflow: visible;
   }
 `;
 

@@ -5,6 +5,8 @@
 
 > DS flix 영화, TV프로그램 정보 사이트 with TypeScript
 
+![toy](https://user-images.githubusercontent.com/30458169/84379364-a8d9d300-ac20-11ea-8c62-db95a59a7a8e.PNG)
+
 ### 🏠 [Homepage](https://eager-allen-ef19d9.netlify.app/)
 -클릭시 홈페이지로 이동합니다.
 

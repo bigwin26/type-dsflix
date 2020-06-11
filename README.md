@@ -42,7 +42,7 @@ npm run start
 # 초기버전
 - TS적용 전 초기버전 https://github.com/bigwin26/dsflix
 
-# 작업순서
+# 추가작업
 
 - [x] 디테일 페이지 구성 변경
 - [x] 디테일 페이지 별점 추가
@@ -53,12 +53,6 @@ npm run start
 - [x] 다국어 적용(React Portal사용)
 - [x] 최적화 (코드스플릿, 메모라이징)
 - [x] 반응형 (모바일, PC)
-
-# 개발이슈
-
-- [x] HashRouter 사용시 LINK를통해 동일한 path로 이동하려고하면 에러발생. ex) /movie/1 -> /movie/2
-  - 해결: 리덕스 상태관리를 통해 해결.
-- [x] 더보기 작업시 중복데이터 필터링 적용
 
 ## Author
 

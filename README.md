@@ -5,7 +5,27 @@
 
 > DS flix 영화, TV프로그램 정보 사이트 with TypeScript
 
+![toy](https://user-images.githubusercontent.com/30458169/84379364-a8d9d300-ac20-11ea-8c62-db95a59a7a8e.PNG)
+
 ### 🏠 [Homepage](https://eager-allen-ef19d9.netlify.app/)
+-클릭시 홈페이지로 이동합니다.
+
+## About
+- TypeScript와 React를 같이 사용해보는 것을 경험하기 위한 토이 프로젝트입니다.
+- 영화정보와 TV프로그램, 배우들의 정보를 조회할 수 있습니다.
+
+## Environment
+# Front
+- HTML
+- CSS
+- TypeScript
+- React
+- styled-components
+- Redux
+- Redux-saga
+
+## Feature
+- PC,mobile
 
 ## Install
 
@@ -19,11 +39,10 @@ npm install
 npm run start
 ```
 
-# DS flix React 작업 완료 이후 타입스크립트 적용 + 추가작업
-
+# 초기버전
 - TS적용 전 초기버전 https://github.com/bigwin26/dsflix
 
-# DS's Blog FrontEnd with REACT , TS
+# 추가작업
 
 - [x] 디테일 페이지 구성 변경
 - [x] 디테일 페이지 별점 추가
@@ -33,13 +52,7 @@ npm run start
 - [x] TV SHOW 디테일 페이지 바로보기 연결 적용
 - [x] 다국어 적용(React Portal사용)
 - [x] 최적화 (코드스플릿, 메모라이징)
-- [x] 반응형 웹(모바일, PC)
-
-# 개발이슈
-
-- [x] HashRouter 사용시 LINK를통해 동일한 path로 이동하려고하면 에러발생. ex) /movie/1 -> /movie/2
-  - 해결: 리덕스 상태관리를 통해 해결.
-- [x] 더보기 작업시 중복데이터 필터링 적용
+- [x] 반응형 (모바일, PC)
 
 ## Author
 

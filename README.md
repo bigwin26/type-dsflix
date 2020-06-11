@@ -7,6 +7,24 @@
 
 ### 🏠 [Homepage](https://eager-allen-ef19d9.netlify.app/)
 -클릭시 홈페이지로 이동합니다.
+
+## About
+- TypeScript와 React를 같이 사용해보는 것을 경험하기 위한 토이 프로젝트입니다.
+- 영화정보와 TV프로그램, 배우들의 정보를 조회할 수 있습니다.
+
+## Environment
+# Front
+HTML
+CSS
+TypeScript
+React
+styled-components
+Redux
+Redux-saga
+
+## Feature
+PC,mobile
+
 ## Install
 
 ```sh
@@ -19,11 +37,10 @@ npm install
 npm run start
 ```
 
-# DS flix React 작업 완료 이후 타입스크립트 적용 + 추가작업
-
+# 초기버전
 - TS적용 전 초기버전 https://github.com/bigwin26/dsflix
 
-# DS's FrontEnd with REACT , TS
+# 작업순서
 
 - [x] 디테일 페이지 구성 변경
 - [x] 디테일 페이지 별점 추가
@@ -33,7 +50,7 @@ npm run start
 - [x] TV SHOW 디테일 페이지 바로보기 연결 적용
 - [x] 다국어 적용(React Portal사용)
 - [x] 최적화 (코드스플릿, 메모라이징)
-- [x] 반응형 웹(모바일, PC)
+- [x] 반응형 (모바일, PC)
 
 # 개발이슈
 

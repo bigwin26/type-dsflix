@@ -14,16 +14,16 @@
 
 ## Environment
 # Front
-HTML
-CSS
-TypeScript
-React
-styled-components
-Redux
-Redux-saga
+- HTML
+- CSS
+- TypeScript
+- React
+- styled-components
+- Redux
+- Redux-saga
 
 ## Feature
-PC,mobile
+- PC,mobile
 
 ## Install
 
